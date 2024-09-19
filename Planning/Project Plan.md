@@ -4,29 +4,21 @@
 ## Plan API Use (9/15)
 
 ## Write Back End (9/19-9/26)
-    ## Construct Database
-        - seed
-            - 25 diagnoses
-            - 25 medications
-            - 25 symptoms
-            - 3 users
-            - 2 diagnoses per user
-            - 5 medications per user
-            - 5 symptoms per user
-            - 25 symptom tracking records
-            - 25 medication tracking records
-    ## Set Up Backend
-        - install all necessary regular packages
-        - install all necessary dev packages
-        - create app.js
+    ## Set Up Backend (9/19)
+        - create db.js
+        - create server.js
+        - create expressError.js
         - create routes folder, models folder, helpers folder, middleware folder
-    ## Auth Routes
+        - go through express unit to see if I'm missing anything
+        - run tests
+        - get the server running
+    ## Auth Routes (9/19)
         - write tests
         - json web token setup 
         - authorization middleware
         - login token route
         - registration route
-    ## User Routes & Models
+    ## User Routes & Models (9/20)
         - write model tests
         - write models
             - authentication
@@ -41,8 +33,7 @@
             - patch user
             - delete user
         - run tests
-    TODAY'S GOAL
-    ## Diagnosis Routes
+    ## Diagnosis Routes & Models (9/20)
         - write model tests
         - write models
             - create diagnosis 
@@ -58,7 +49,7 @@
             - update diagnosis
             - delete diagnosis
         - run tests
-    ## Symptom Routes
+    ## Symptom Routes & Models (9/21)
         - write model tests
         - write models
             - create symptom
@@ -88,7 +79,7 @@
             - delete symptom tracking record
             - delete symptom tracking records for a single day
         - run tests
-    ## Medication Routes
+    ## Medication Routes & Models(9/21)
         - write model tests
         - write models
             - create medication
@@ -117,7 +108,7 @@
             - update medication tracking record
             - delete medicaton tracking record
             - delte medication tracking records for a single day
-    ## Data Routes
+    ## Data Routes & Models (9/22)
         - write model tests
         - write models
             - get data points on certain factors for a certain period of time
@@ -127,6 +118,7 @@
 
 ## Write Front End
     ## Set Up React Site
+    ## Plan Out Components
     ## Home Page
     ## Signed In Home Page
     ## The Latest Sidebar & Page
@@ -147,6 +139,8 @@
 ## Documentation & Deployment
     ## Add comments
     ## Write ReadMe
+    ## Write About Page
+    ## Hand in Assignment
     ## Deploy back end
     ## Deploy front end
 
