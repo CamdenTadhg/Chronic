@@ -5,7 +5,6 @@
 
 ## Write Back End (9/19-9/26)
     ## Construct Database
-        - schema (what needs to cascade)
         - seed
             - 25 diagnoses
             - 25 medications
@@ -41,6 +40,8 @@
             - get individual user
             - patch user
             - delete user
+        - run tests
+    TODAY'S GOAL
     ## Diagnosis Routes
         - write model tests
         - write models
@@ -56,6 +57,7 @@
             - get individual diagnosis
             - update diagnosis
             - delete diagnosis
+        - run tests
     ## Symptom Routes
         - write model tests
         - write models
@@ -85,6 +87,7 @@
             - update symptom tracking record
             - delete symptom tracking record
             - delete symptom tracking records for a single day
+        - run tests
     ## Medication Routes
         - write model tests
         - write models
@@ -100,6 +103,20 @@
             - update medication tracking record
             - delete medication tracking record
             - delete medication tracking records for a single day
+        - write route tests
+        - write routes
+            - create medication
+            - get list of all medications
+            - get individual medication
+            - update medication
+            - delete medicaton
+            - create medication tracking record
+            - get list of all medication tracking records
+            - get individual medication tracking record
+            - get all mediation tracking records for a single day
+            - update medication tracking record
+            - delete medicaton tracking record
+            - delte medication tracking records for a single day
     ## Data Routes
         - write model tests
         - write models
@@ -154,3 +171,4 @@
     ## Statistical Insights
     ## Reminders
     ## Admin Interface
+    ## Diagnosis Message Boards
