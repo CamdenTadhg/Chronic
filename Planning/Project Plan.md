@@ -4,52 +4,56 @@
 ## Plan API Use (9/15)
 
 ## Write Back End (9/19-9/26)
-    ## Set Up Backend (9/19)
-        - create db.js
-        - create server.js
-        - create expressError.js
-        - create routes folder, models folder, helpers folder, middleware folder
-        - go through express unit to see if I'm missing anything
-        - run tests
-        - get the server running
-    ## Auth Routes (9/19)
-        - write tests
-        - json web token setup 
-        - authorization middleware
-        - login token route
-        - registration route
-    ## User Routes & Models (9/20)
+    ## User Routes & Models
         - write model tests
+            - User.edit
+            - User.delete
+            - User.assignDiag
+            - User.assignSymp
+            - User.assignMed
         - write models
-            - authentication
-            - registration
-            - get individual user
-            - update user record
-            - delete user record
+            - User.authenticate
+            - User.register
+            - User.create
+            - User.getAll
+            - User.getOne
+            - User.edit
+            - User.delete
+            - User.assignDiag
+            - User.assignSymp
+            - User.assignMed
         - write route tests
         - write routes
-            - create new user
-            - get individual user
-            - patch user
-            - delete user
-        - run tests
-    ## Diagnosis Routes & Models (9/20)
+            - new user schema
+            - edit user schema
+            - POST /
+            - GET /
+            - GET /:userId
+            - PATCH /:userId
+            - DELETE /:userId
+    ## Diagnosis Routes & Models
         - write model tests
+            - Diagnosis.create
+            - Diagnosis.getAll
+            - Diagnosis.getOne
+            - Diagnosis.edit
+            - Diagnosis.delete
         - write models
-            - create diagnosis 
+            - Diagnosis.create
+            - Diagnosis.getAll
+            - Diagnosis.getOne
+            - Diagnosis.edi
+            - Diagnosis.delete
+        - write route tests
+        - write routes
+            - new diagnosis schema
+            - edit diagnosis schema
+            - create/select diagnosis and connect it to a user
             - get list of all diagnoses
             - get individual diagnosis
             - update diagnosis
             - delete diagnosis
-        - write route tests
-        - write routes
-            - create diagnosis
-            - get list of all diagnoses
-            - get individual diagnosis
-            - update diagnosis
-            - delete diagnosis
-        - run tests
-    ## Symptom Routes & Models (9/21)
+    ## Symptom Routes & Models
         - write model tests
         - write models
             - create symptom
@@ -58,7 +62,7 @@
             - update symptom
             - delete symptom
             - create symptom tracking record
-            - get list of all symptom tracking records
+            - get list of all symptom tracking records for one user
             - get individual symptom tracking record
             - get all symptom tracking record for a single day
             - update symptom tracking record
@@ -66,29 +70,32 @@
             - delete symptom tracking records for a single day
         - write route tests
         - write routes
-            - create symptom 
+            - new symptom schema
+            - create/select symptom and connect it to a user 
             - get list of all symptoms
             - get individual symptom
+            - edit symptom schema
             - update symptom
             - delete symptom
+            - new symptom tracking record schema
             - create symptom tracking record
-            - get list of all symptom tracking records
+            - get list of all symptom tracking records for one user
             - get individual symptom tracking record
-            - get all symptom tracking records for as single day
+            - get all symptom tracking records for a single day
+            - edit symptom tracking record schema
             - update symptom tracking record
             - delete symptom tracking record
             - delete symptom tracking records for a single day
-        - run tests
-    ## Medication Routes & Models(9/21)
+    ## Medication Routes & Models
         - write model tests
         - write models
-            - create medication
+            - create medication 
             - get list of all medications
             - get individual medication
             - update medication
             - delete medication
             - create medication tracking record
-            - get list of all medication tracking records
+            - get list of all medication tracking records for one user
             - get individual medication tracking record
             - get all medication tracking records for a single day
             - update medication tracking record
@@ -96,25 +103,32 @@
             - delete medication tracking records for a single day
         - write route tests
         - write routes
-            - create medication
+            - new medication schema
+            - create/select medication and connect it to a user
             - get list of all medications
             - get individual medication
+            - edit medication schema
             - update medication
             - delete medicaton
+            - new medication tracking record schema
             - create medication tracking record
-            - get list of all medication tracking records
+            - get list of all medication tracking records for one user
             - get individual medication tracking record
             - get all mediation tracking records for a single day
+            - edit medication tracking record schema
             - update medication tracking record
             - delete medicaton tracking record
-            - delte medication tracking records for a single day
-    ## Data Routes & Models (9/22)
+            - delete medication tracking records for a single day
+    ## Data Routes & Models
         - write model tests
         - write models
             - get data points on certain factors for a certain period of time
         - write route tests
         - write routes
             - get data points on certain factors for a certain period of time
+    ## Testing
+        - get all tests working
+        - spot test with Insomnia
 
 ## Write Front End
     ## Set Up React Site
