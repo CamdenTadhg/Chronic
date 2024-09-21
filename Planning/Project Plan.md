@@ -3,26 +3,10 @@
 ## Design Database Schema (9/15)
 ## Plan API Use (9/15)
 
-## Write Back End (9/19-9/26)
-    ## User Routes & Models
-        - write model tests
-            - User.edit
-            - User.delete
-            - User.assignDiag
-            - User.assignSymp
-            - User.assignMed
-        - write models
-            - User.authenticate
-            - User.register
-            - User.create
-            - User.getAll
-            - User.getOne
-            - User.edit
-            - User.delete
-            - User.assignDiag
-            - User.assignSymp
-            - User.assignMed
+## Write Back End (9/19-9/29)
+    ## User Routes & Models (9/21)
         - write route tests
+            - DELETE /:userId
         - write routes
             - new user schema
             - edit user schema
@@ -31,19 +15,21 @@
             - GET /:userId
             - PATCH /:userId
             - DELETE /:userId
-    ## Diagnosis Routes & Models
+    ## Diagnosis Routes & Models (9/22-9/23)
         - write model tests
             - Diagnosis.create
             - Diagnosis.getAll
             - Diagnosis.getOne
             - Diagnosis.edit
             - Diagnosis.delete
+            - Diagnosis.userUpdate
         - write models
             - Diagnosis.create
             - Diagnosis.getAll
             - Diagnosis.getOne
-            - Diagnosis.edi
+            - Diagnosis.edit
             - Diagnosis.delete
+            - Diagnosis.userUpdate
         - write route tests
         - write routes
             - new diagnosis schema
@@ -52,8 +38,9 @@
             - get list of all diagnoses
             - get individual diagnosis
             - update diagnosis
+            - update a user diagnosis record
             - delete diagnosis
-    ## Symptom Routes & Models
+    ## Symptom Routes & Models (9/23)
         - write model tests
         - write models
             - create symptom
@@ -86,7 +73,7 @@
             - update symptom tracking record
             - delete symptom tracking record
             - delete symptom tracking records for a single day
-    ## Medication Routes & Models
+    ## Medication Routes & Models (9/24)
         - write model tests
         - write models
             - create medication 
@@ -119,14 +106,14 @@
             - update medication tracking record
             - delete medicaton tracking record
             - delete medication tracking records for a single day
-    ## Data Routes & Models
+    ## Data Routes & Models (9/25)
         - write model tests
         - write models
             - get data points on certain factors for a certain period of time
         - write route tests
         - write routes
             - get data points on certain factors for a certain period of time
-    ## Testing
+    ## Testing (9/25-9/29)
         - get all tests working
         - spot test with Insomnia
 

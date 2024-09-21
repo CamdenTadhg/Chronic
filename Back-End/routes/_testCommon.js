@@ -48,9 +48,9 @@ async function commonBeforeAll() {
         synonyms: ['d3']
     });
 
-    await User.assignDiag(1, 1);
-    await User.assignDiag(2, 2);
-    await User.assignDiag(3, 3);
+    await User.assignDiag(1, 1, ["pain"]);
+    await User.assignDiag(2, 2, []);
+    await User.assignDiag(3, 3, ["fatigue", "long covid"]);
 
     await Symptom.create({
         symptom_id: 1,
@@ -65,9 +65,9 @@ async function commonBeforeAll() {
         symptom: 'S3'
     });
 
-    await User.assignSymp(1, 1, ["pain"]);
-    await User.assignSymp(2, 2, []);
-    await User.assignSymp(3, 3, ["fatigue", "long covid"]);
+    await User.assignSymp(1, 1);
+    await User.assignSymp(2, 2);
+    await User.assignSymp(3, 3);
 
     await Symptom.track({
         user_id: 1,

@@ -42,6 +42,7 @@ describe("POST /auth/signin", function () {
                 password: 'password'
             });
         expect(resp.statusCode).toEqual(401);
+        expect(resp.body.error.message).toContain('Invalid email');
     });
 
     test('unauth with wrong password', async function () {
@@ -52,6 +53,7 @@ describe("POST /auth/signin", function () {
                 password: 'fakepassword'
             });
         expect(resp.statusCode).toEqual(401);
+        expect(resp.body.error.message).toContain('Invalid password');
     });
 
     test('bad request with missing data', async function () {
@@ -61,6 +63,7 @@ describe("POST /auth/signin", function () {
                 password: 'password'
             });
         expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance requires property "email"');
     });
 
     test('bad request with invalid data', async function(){
@@ -71,6 +74,7 @@ describe("POST /auth/signin", function () {
                 password: 'password'
             });
         expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance.email');
     });
 });
 
@@ -99,6 +103,7 @@ describe('POST /auth/register', function () {
                 name: 'Incomplete User'
             });
         expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance requires property "email"');
     });
 
     test('bad request with invalid data', async function () {
@@ -110,5 +115,18 @@ describe('POST /auth/register', function () {
                 email: 'iamnotanemail'
             });
         expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance.email');
     });
+
+    test('bad request with duplicate email', async function(){
+        const resp = await request(app)
+            .post('/auth/register')
+            .send({
+                password: 'password',
+                name: 'Duplicate User',
+                email: 'u1@test.com',
+            });
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('There is already an account');
+    })
 });
