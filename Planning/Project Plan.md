@@ -4,11 +4,8 @@
 ## Plan API Use (9/15)
 
 ## Write Back End (9/19-9/29)
-    ## Fix Database 
-        - COMMIT
     ## User Routes & Models 
         - write route tests
-            - DELETE /:userId
             - COMMIT
         - write routes
             - new user schema

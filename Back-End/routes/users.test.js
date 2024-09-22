@@ -373,9 +373,33 @@ describe('PATCH /users/:userId', function(){
 /**DELETE /users/:userId */
 
 describe('DELETE /users/:userId', function(){
-    test('works for matching user', async function(){});
-    test('works for admin', async function(){});
-    test('forbidden for other users', async function(){});
-    test('unauthorized for anonymouse', async function(){});
-    test('not found if user not found', async function(){});
-})
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .delete('/users/1')
+            .set('authorization', u1Token);
+        expect(resp.body).toEqual({deleted: 1});
+    });
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .delete('/users/1')
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual({deleted: 1});
+    });
+    test('forbidden for other users', async function(){
+        const resp = await request(app)
+            .delete('/users/1')
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .delete('/users/1');
+        expect(resp.statusCode).toEqual(401);
+    });
+    test('not found if user not found', async function(){
+        const resp = await request(app)
+            .delete('/users/0')
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(404);
+    });
+});
