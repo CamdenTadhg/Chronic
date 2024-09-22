@@ -4,12 +4,8 @@
 ## Plan API Use (9/15)
 
 ## Write Back End (9/19-9/29)
-    ## User Routes & Models 
-        - write route tests
-            - COMMIT
+    ## User Routes & Models
         - write routes
-            - new user schema
-            - edit user schema
             - POST /
             - GET /
             - GET /:userId
