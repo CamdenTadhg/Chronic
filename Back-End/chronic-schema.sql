@@ -40,9 +40,11 @@ CREATE TABLE symptom_tracking (
     user_id INTEGER NOT NULL,
     symptom_id INTEGER NOT NULL,
     tracked_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    track_date DATE NOT NULL,
     timespan timespan NOT NULL,
     severity INTEGER NOT NULL CHECK (severity >= 0 AND severity <= 5),
-    FOREIGN KEY (user_id, symptom_id) REFERENCES users_symptoms (user_id, symptom_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id, symptom_id) REFERENCES users_symptoms (user_id, symptom_id) ON DELETE CASCADE,
+    CONSTRAINT unique_symptom_tracking UNIQUE(user_id, symptom_id, track_date, timespan)
 );
 
 CREATE TABLE medications (
@@ -66,7 +68,9 @@ CREATE TABLE medication_tracking (
     user_id INTEGER NOT NULL,
     med_id INTEGER NOT NULL,
     tracked_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    track_date DATE NOT NULL,
     time_of_day time_of_day NOT NULL,
     number INTEGER CHECK (number >= 1),
-    FOREIGN KEY (user_id, med_id) REFERENCES users_medications (user_id, med_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id, med_id) REFERENCES users_medications (user_id, med_id) ON DELETE CASCADE,
+    CONSTRAINT unique_medication_tracking UNIQUE(user_id, med_id, track_date, time_of_day)
 );

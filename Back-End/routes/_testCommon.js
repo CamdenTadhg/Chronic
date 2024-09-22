@@ -72,18 +72,21 @@ async function commonBeforeAll() {
     await Symptom.track({
         user_id: 1,
         symptom_id: 1, 
+        track_date: '2024-09-21',
         timespan: '12-8 AM',
         severity: 3
     });
     await Symptom.track({
         user_id: 1,
         symptom_id: 1,
+        track_date: '2024-09-21',
         timespan: '8 AM-12 PM',
         severity: 2
     });
     await Symptom.track({
         user_id: 1,
         symptom_id: 1,
+        track_date: '2024-09-21',
         timespan: '12-4 PM',
         severity: 1
     });
@@ -108,18 +111,21 @@ async function commonBeforeAll() {
     await Medication.track({
         user_id: 1, 
         med_id: 1, 
+        track_date: '2024-09-21',
         time_of_day: 'AM', 
         number: 2
     });
     await Medication.track({
         user_id: 1, 
         med_id: 1, 
+        track_date: '2024-09-21',
         time_of_day: 'PM', 
         number: 1
     });
     await Medication.track({
         user_id: 3, 
         med_id: 3, 
+        track_date: '2024-09-21',
         time_of_day: 'Midday', 
         number: 1
     });

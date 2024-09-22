@@ -73,10 +73,10 @@ async function commonBeforeAll() {
         VALUES (${u1Id}, ${s1Id}), (${u2Id}, ${s2Id}), (${u3Id}, ${s3Id})`);
 
     await db.query(`
-        INSERT INTO symptom_tracking (user_id, symptom_id, timespan, severity)
-        VALUES  (${u1Id}, ${s1Id}, '12-8 AM', 3),
-                (${u1Id}, ${s1Id}, '8 AM-12 PM', 2),
-                (${u1Id}, ${s1Id}, '12-4 PM', 1)`);
+        INSERT INTO symptom_tracking (user_id, symptom_id, track_date, timespan, severity)
+        VALUES  (${u1Id}, ${s1Id}, '2024-09-21', '12-8 AM', 3),
+                (${u1Id}, ${s1Id}, '2024-09-21', '8 AM-12 PM', 2),
+                (${u1Id}, ${s1Id}, '2024-09-21', '12-4 PM', 1)`);
 
     await db.query(`
         INSERT INTO medications(medication)
@@ -103,10 +103,10 @@ async function commonBeforeAll() {
                 (${u1Id}, ${m3Id}, 1, 'pill', '{"AM", "Midday", "PM", "Evening"}')`);
 
     await db.query(`
-        INSERT INTO medication_tracking (user_id, med_id, time_of_day, number)
-        VALUES  (${u1Id}, ${m1Id}, 'AM', 2),
-                (${u1Id}, ${m1Id}, 'PM', 1),
-                (${u1Id}, ${m3Id}, 'Midday', 1)`);
+        INSERT INTO medication_tracking (user_id, med_id, track_date, time_of_day, number)
+        VALUES  (${u1Id}, ${m1Id}, '2024-09-21', 'AM', 2),
+                (${u1Id}, ${m1Id}, '2024-09-21', 'PM', 1),
+                (${u1Id}, ${m3Id}, '2024-09-21', 'Midday', 1)`);
 };
 
 async function commonBeforeEach() {
