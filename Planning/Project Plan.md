@@ -4,14 +4,6 @@
 ## Plan API Use (9/15)
 
 ## Write Back End (9/19-9/29)
-    ## User Routes & Models
-        - write routes
-            - POST /
-            - GET /
-            - GET /:userId
-            - PATCH /:userId
-            - DELETE /:userId
-            - COMMIT
     ## Diagnosis Routes & Models
         - write model tests
             - Diagnosis.create
@@ -20,6 +12,7 @@
             - Diagnosis.edit
             - Diagnosis.delete
             - Diagnosis.userUpdate
+            - Diagnosis.userDelete
             - COMMIT
         - write models
             - Diagnosis.create
@@ -39,6 +32,7 @@
             - get individual diagnosis
             - update diagnosis
             - update a user diagnosis record
+            - delete a user diagnosis record
             - delete diagnosis
             - COMMIT
     ## Symptom Routes & Models

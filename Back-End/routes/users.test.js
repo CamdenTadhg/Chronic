@@ -15,9 +15,6 @@ const {
     u2Token,
     u3Token
 } = require('./_testCommon');
-const { describe, default: test } = require("node:test");
-const { expect } = require("vitest");
-const { send } = require("process");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
