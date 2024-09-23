@@ -4,29 +4,26 @@
 ## Plan API Use (9/15)
 
 ## Write Back End (9/19-9/29)
-        - write models (9/23)
-            - Diagnosis.delete
-            - Diagnosis.userConnect
-            - Diagnosis.userUpdate
-            - Diagnosis.userDelete
-            - COMMIT
-        - write route tests (9/23)
+
             - COMMIT
         - write routes (9/23)
             - new diagnosis schema
             - edit diagnosis schema
-            - create/select diagnosis and connect it to a user
-            - get list of all diagnoses
-            - get individual diagnosis
-            - update diagnosis
-            - update a user diagnosis record
-            - delete a user diagnosis record
-            - delete diagnosis
+            - new userDiagnosis schema
+            - edit userDiagnosis schema
+            - POST /diagnoses/
+            - GET /diagnoses/
+            - GET /diagnoses/:diagnosisId
+            - PATCH /diagnoses/:diagnosisId
+            - DELETE /diagnoses/: diagnosisId
+            - POST diagnoses/:diagnosisId/users/:userId/
+            - PATCH diagnoses/:diagnosisId/users/:userId/
+            - DELETE diagnoses/:diagnosisId/users/:userId/
             - COMMIT
     ## Symptom Routes & Models
         - write model tests (9/23)
             - COMMIT
-        - write models
+        - write models (9/23)
             - create symptom
             - get list of all symptoms
             - get individual symptom
@@ -40,9 +37,9 @@
             - delete symptom tracking record
             - delete symptom tracking records for a single day
             - COMMIT
-        - write route tests
+        - write route tests (9/24)
             - COMMIT
-        - write routes
+        - write routes (9/26)
             - new symptom schema
             - create/select symptom and connect it to a user 
             - get list of all symptoms
@@ -60,10 +57,10 @@
             - delete symptom tracking record
             - delete symptom tracking records for a single day
             - COMMIT
-    ## Medication Routes & Models
-        - write model tests
+    ## Medication Routes & Models 
+        - write model tests (9/26)
             - COMMIT
-        - write models
+        - write models (9/26)
             - create medication 
             - get list of all medications
             - get individual medication
@@ -77,9 +74,9 @@
             - delete medication tracking record
             - delete medication tracking records for a single day
             - COMMIT
-        - write route tests
+        - write route tests (9/26)
             - COMMIT
-        - write routes
+        - write routes (9/27)
             - new medication schema
             - create/select medication and connect it to a user
             - get list of all medications
@@ -97,7 +94,7 @@
             - delete medicaton tracking record
             - delete medication tracking records for a single day
             - COMMIT
-    ## Data Routes & Models
+    ## Data Routes & Models (9/27)
         - write model tests
             - COMMIT
         - write models
@@ -108,8 +105,13 @@
         - write routes
             - get data points on certain factors for a certain period of time
             - COMMIT
-    ## Testing
+    ## Testing (9/28-9/29)
         - get all tests working
+            - general
+            - helpers
+            - middleware
+            - models
+            - routes
         - COMMIT
         - spot test with Insomnia
         - COMMIT

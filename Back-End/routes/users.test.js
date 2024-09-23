@@ -179,7 +179,7 @@ describe('GET /users/', function(){
         await db.query("DROP TABLE users CASCADE");
         const resp = await request(app)
             .get("/users")
-            .set("authorization", `Bearer ${u3Token}`);
+            .set("authorization", u2Token);
         expect(resp.statusCode).toEqual(500);
     });
 });
@@ -218,32 +218,32 @@ describe('GET /users/:userId', function() {
     });
     test('works for admin', async function(){
         const resp = await request(app)
-        .get('/users/1')
-        .set('authorization', u2Token);
-    expect(resp.body).toEqual({
-        user: {
-            userId: 1,
-            email: 'u1@test.com', 
-            name: 'U1', 
-            isAdmin: false,
-            lastLogin: expect.any(Date),
-            diagnoses: [
-                {
-                    diagnosis: 'D1', 
-                    keywords: ["pain"]
-                }
-            ],
-            symptoms: ['S1'],
-            medications: [
-                {
-                    medication: 'M1', 
-                    dosageNum:300,
-                    dosageUnit: 'mg',
-                    timeOfDay: ['AM', 'PM']
-                }
-            ]
-        }
-    });
+            .get('/users/1')
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual({
+            user: {
+                userId: 1,
+                email: 'u1@test.com', 
+                name: 'U1', 
+                isAdmin: false,
+                lastLogin: expect.any(Date),
+                diagnoses: [
+                    {
+                        diagnosis: 'D1', 
+                        keywords: ["pain"]
+                    }
+                ],
+                symptoms: ['S1'],
+                medications: [
+                    {
+                        medication: 'M1', 
+                        dosageNum:300,
+                        dosageUnit: 'mg',
+                        timeOfDay: ['AM', 'PM']
+                    }
+                ]
+            }
+        });
     });
     test('forbidden for other users', async function(){
         const resp = await request(app)
