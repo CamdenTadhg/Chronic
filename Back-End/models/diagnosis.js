@@ -3,11 +3,10 @@
 const db = require('../db');
 const {
     NotFoundError,
-    BadRequestError,
+    BadRequestError
 } = require('../expressError');
-const {sqlForPartialUpdateArray} = require('../helpers/sql');
 
-class Diagnosis {
+class Diagnosis{
     /**Create
      * inputs: {diagnosis, synonyms[]}
      * outputs: {diagnosisId, diagnosis, synonyms[]}
@@ -48,16 +47,16 @@ class Diagnosis {
      * outputs: [{diagnosisId, diagnosis, synonyms[]}, ...]
      */
 
-    static async getAll(){
-        const result = await db.query(
-            `SELECT diagnosis_id AS "diagnosisId",
-                    diagnosis,
-                    synonyms, 
-            FROM diagnoses
-            ORDER BY diagnosis`
-        );
-        return result.rows;
-    };
+        static async getAll(){
+            const result = await db.query(
+                `SELECT diagnosis_id AS "diagnosisId",
+                        diagnosis,
+                        synonyms, 
+                FROM diagnoses
+                ORDER BY diagnosis`
+            );
+            return result.rows;
+        };
 
     /**GetOne
      * inputs: diagnosisId
@@ -68,7 +67,7 @@ class Diagnosis {
         const result = await db.query(
             `SELECT diagnosis_id AS "diagnosisId",
                     diagnosis, 
-                    synonyms, 
+                    synonyms 
             FROM diagnoses
             WHERE diagnosis_id = $1`,
             [diagnosisId]
@@ -122,8 +121,8 @@ class Diagnosis {
     };
 
     /**Delete
-     * inputs: userId
-     * outputs: none
+     * inputs: diagnosisId
+     * outputs: diagnosisId
      * NotFound error if diagnosis not found
      */
 
@@ -222,4 +221,6 @@ class Diagnosis {
         if (!userDiagnosis) throw new NotFoundError('No such userDiagnosis exists');
         return userDiagnosis;
     };
-}
+};
+
+module.exports = Diagnosis;

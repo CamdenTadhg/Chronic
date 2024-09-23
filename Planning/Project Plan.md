@@ -4,42 +4,48 @@
 ## Plan API Use (9/15)
 
 ## Write Back End (9/19-9/29)
-        - write routes (9/23)
-            - COMMIT
     ## Symptom Routes & Models
-        - write model tests (9/23)
-            - COMMIT
         - write models (9/23)
-            - create symptom
-            - get list of all symptoms
-            - get individual symptom
-            - update symptom
-            - delete symptom
-            - create symptom tracking record
-            - get list of all symptom tracking records for one user
-            - get individual symptom tracking record
-            - get all symptom tracking record for a single day
-            - update symptom tracking record
-            - delete symptom tracking record
-            - delete symptom tracking records for a single day
+            - Symptom.create = create symptom
+            - Symptom.getAll = get list of all symptoms
+            - Symptom.getOne = get individual symptom
+            - Symptom.edit = update symptom
+            - Symptom.delete = delete symptom
+            - Symptom.userConnect
+            - symptom.userChange
+            - symptom.userDisconnect
+            - Symptom.track = create symptom tracking record
+            - Symptom.getAllTracking = get list of all symptom tracking records for one user
+            - Symptom.getOneTracking = get individual symptom tracking record
+            - Symptom.getDayTracking = get all symptom tracking record for a single day
+            - Symptom.editTracking = update symptom tracking record
+            - Symptom.deleteTracking = delete symptom tracking record
+            - Symptom.deleteDayTracking = delete symptom tracking records for a single day
             - COMMIT
         - write route tests (9/24)
             - COMMIT
         - write routes (9/26)
             - new symptom schema
+            - edit symptom schema
+            - new user symptom schema
+            - new symptom tracking record schema
+            - edit symptom tracking record schema
             - create/select symptom and connect it to a user 
             - get list of all symptoms
             - get individual symptom
             - edit symptom schema
             - update symptom
             - delete symptom
-            - new symptom tracking record schema
+            - create symptom user connection
+            - change symptom user connection
+            - delete symptom user connection
             - create symptom tracking record
             - get list of all symptom tracking records for one user
             - get individual symptom tracking record
             - get all symptom tracking records for a single day
             - edit symptom tracking record schema
             - update symptom tracking record
+            - update all symptom tracking records for a certain symptom
             - delete symptom tracking record
             - delete symptom tracking records for a single day
             - COMMIT
@@ -52,6 +58,9 @@
             - get individual medication
             - update medication
             - delete medication
+            - connect user and medication
+            - change user/medication connection
+            - delete user/medication connection
             - create medication tracking record
             - get list of all medication tracking records for one user
             - get individual medication tracking record
