@@ -4,7 +4,8 @@ process.env.NODE_ENV === "test";
 const request = require("supertest");
 const db = require('../db.js');
 const app = require('../app.js');
-const Diagnosis = require('../models/diagnosis');
+const Diagnosis = require('./diagnosis');
+const {NotFoundError, BadRequestError} = require('../expressError')
 
 const {
     commonBeforeAll,
@@ -14,8 +15,7 @@ const {
     u1Token,
     u2Token,
     u3Token
-} = require('../routes/_testCommon.js');
-const { describe, default: test } = require("node:test");
+} = require('./_testCommon.js');
 const { expect } = require("vitest");
 
 beforeAll(commonBeforeAll);
@@ -157,8 +157,8 @@ describe('Diagnosis.delete', function(){
     test('works with valid data', async function(){
         const diagnosisId = await db.query(`SELECT diagnosis_id FROM diagnoses WHERE diagnosis = 'D3'`);
         await Diagnosis.delete(diagnosisId);
-        const notfound = await db.query(`SELECT * FROM diagnoses WHERE diagnosis = 'D3'`);
-        expect(notfound.rows.length).toEqual(0);
+        const notFound = await db.query(`SELECT * FROM diagnoses WHERE diagnosis = 'D3'`);
+        expect(notFound.rows.length).toEqual(0);
     });
     test('NotFound with invalid diagnosis', async function(){
         try {
@@ -184,6 +184,7 @@ describe('Diagnosis.userConnect', async function(){
             keywords: ['vertigo']
         });
         const found = await db.query(`SELECT * FROM users_diagnoses WHERE user_id = $1 AND diagnosis_id = $2`, [userId, diagnosisId]);
+        expect(found.rows.length).toEqual(1);
     });
     test('NotFound error with invalid diagnosis', async function(){
         try {

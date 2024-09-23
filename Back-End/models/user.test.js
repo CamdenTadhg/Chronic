@@ -32,9 +32,8 @@ describe('User.authenticate', function () {
             isAdmin: false,
             lastLogin: expect.any(Date)
         });
-        const lastLogin = await db.query(`SELECT last_login FROM users WHERE email = 'u1@test.com'`);
         const currentTime = new Date();
-        const timeDifference = Math.abs(currentTime - lastLogin);
+        const timeDifference = Math.abs(currentTime - user.lastLogin);
         expect(timeDifference).toBeLessThan(5000);
     });
     test('unauthorized if email is wrong', async function() {

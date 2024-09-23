@@ -70,7 +70,7 @@ async function commonBeforeAll() {
 
     await db.query(`
         INSERT INTO users_symptoms(user_id, symptom_id)
-        VALUES (${u1Id}, ${s1Id}), (${u2Id}, ${s2Id}), (${u3Id}, ${s3Id})`);
+        VALUES (${u1Id}, ${s1Id}), (${u1Id}, ${s2Id}), (${u3Id}, ${s3Id})`);
 
     await db.query(`
         INSERT INTO symptom_tracking (user_id, symptom_id, track_date, timespan, severity)
