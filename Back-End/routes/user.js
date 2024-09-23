@@ -12,7 +12,7 @@ const userUpdateSchema = require('../schemas/userUpdate.json');
 
 const router = express.Router();
 
-/** POST /users/: {email, password, name, isAdmin} => {user}
+/** POST /users/ {email, password, name, isAdmin} => {user}
  * 
  * Returns new user with userId, email, name, isAdmin, lastLogin
  * 
@@ -59,7 +59,7 @@ router.get('/', ensureLoggedIn, ensureAdmin, async function (req, res, next){
 
 router.get('/:userId', ensureLoggedIn, ensureAdminOrSelf, async function (req, res, next){
     try {
-        const user = await user.getOne(req.params.userId);
+        const user = await User.getOne(req.params.userId);
         return res.json({user});
     } catch (err) {
         return next(err);

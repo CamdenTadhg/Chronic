@@ -75,6 +75,7 @@ class Diagnosis {
         );
         const diagnosis = result.rows[0];
         if (!diagnosis) throw new NotFoundError('No such diagnosis exists');
+        return diagnosis;
     };
 
     /**Edit
@@ -135,6 +136,7 @@ class Diagnosis {
             [diagnosisId]);
         const diagnosis = result.rows[0];
         if (!diagnosis) throw new NotFoundError('No such diagnosis exists');
+        return diagnosis;
     };
 
     /**UserConnect
@@ -214,9 +216,10 @@ class Diagnosis {
             `DELETE 
             FROM users_diagnoses
             WHERE user_id = $1 AND diagnosis_id = $2
-            RETURNING user_id`,
+            RETURNING user_id, diagnosis_id`,
             [userId, diagnosisId]);
         const userDiagnosis = result.rows[0];
         if (!userDiagnosis) throw new NotFoundError('No such userDiagnosis exists');
+        return userDiagnosis;
     };
 }

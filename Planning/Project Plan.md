@@ -4,21 +4,7 @@
 ## Plan API Use (9/15)
 
 ## Write Back End (9/19-9/29)
-
-            - COMMIT
         - write routes (9/23)
-            - new diagnosis schema
-            - edit diagnosis schema
-            - new userDiagnosis schema
-            - edit userDiagnosis schema
-            - POST /diagnoses/
-            - GET /diagnoses/
-            - GET /diagnoses/:diagnosisId
-            - PATCH /diagnoses/:diagnosisId
-            - DELETE /diagnoses/: diagnosisId
-            - POST diagnoses/:diagnosisId/users/:userId/
-            - PATCH diagnoses/:diagnosisId/users/:userId/
-            - DELETE diagnoses/:diagnosisId/users/:userId/
             - COMMIT
     ## Symptom Routes & Models
         - write model tests (9/23)

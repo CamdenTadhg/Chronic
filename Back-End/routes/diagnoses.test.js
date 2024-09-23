@@ -158,7 +158,7 @@ describe('GET /diagnoses/', function(){
             ]
         });
     });
-    test('unauthorized for anonymouse', async function(){
+    test('unauthorized for anonymous', async function(){
         const resp = await request(app)
             .get('/diagnoses/');
         expect(resp.statusCode).toEqual(401);
@@ -215,13 +215,14 @@ describe('PATCH /diagnoses/:diagnosisId', function(){
         const resp = await request(app)
             .patch('/diagnoses/1')
             .send({
+                diagnosis: 'D1 disorder',
                 synonyms: ['D1 syndrome']
             })
             .set('authorization', u2Token);
         expect(resp.body).toEqual({
             diagnosis: {
                 diagnosisId: 1,
-                diagnosis: 'D1',
+                diagnosis: 'D1 disorder',
                 synonyms: ['d1', 'disease', 'D1 sydrome']
             }
         });
@@ -243,6 +244,16 @@ describe('PATCH /diagnoses/:diagnosisId', function(){
             })
         expect(resp.statusCode).toEqual(401);
     });
+    test('bad request with invalid data', async function(){
+        const resp = await request(app)
+            .patch('/diagnoses/1')
+            .send({
+                synonyms: 'D1 disorder'
+            })
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance.synonyms')
+    })
     test('not found for invalid diagnosis', async function(){
         const resp = await request(app)
             .patch('/diagnoses/0')
@@ -297,7 +308,7 @@ describe('POST /diagnoses/:diagnosisId/users/:userId', function(){
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
-            user: {
+            userDiagnosis: {
                 userId: 1,
                 diagnosisId: 2,
                 keywords: ['pain', 'fatigue']
@@ -313,7 +324,7 @@ describe('POST /diagnoses/:diagnosisId/users/:userId', function(){
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
-            user: {
+            userDiagnosis: {
                 userId: 1,
                 diagnosisId: 3,
                 keywords: ['pain', 'fatigue']
@@ -329,7 +340,7 @@ describe('POST /diagnoses/:diagnosisId/users/:userId', function(){
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
-            user: {
+            userDiagnosis: {
                 userId: 1,
                 diagnosisId: expect.any(Number),
                 keywords: ['allergy']
@@ -487,7 +498,7 @@ describe('POST /diagnosis/:diagnosisId/users/:userId', function(){
         const resp = await request(app)
             .delete('/diagnoses/1/users/1/')
             .set('authorization', u2Token);
-        expect(resp.body).toEqual({deleted: [1, 1]});
+        expect(resp.body).toEqual({deleted: [`User 1`, `Diagnosis 1`]});
     });
     test('works for matching user', async function(){
         const resp = await request(app)
