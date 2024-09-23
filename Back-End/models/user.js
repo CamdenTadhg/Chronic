@@ -198,12 +198,12 @@ class User {
             data.password = await bcrypt.hash(data.password, BCRYPT_WORK_FACTOR);
         }
 
-        const {userSetCols, userValues} = sqlForPartialUpdate(
-            data.user,{});
-        const userIdVarIdx = "$" + (values.length + 1);
+        const {setCols, values} = sqlForPartialUpdate(
+            data,{});
+        const idVarIdx = "$" + (values.length + 1);
         const userQuery =   `UPDATE users
-                            SET ${userSetCols}
-                            WHERE userId = ${userIdVarIdx}
+                            SET ${setCols}
+                            WHERE user_id = ${idVarIdx}
                             RETURNING   user_id AS "userId",
                                         email,
                                         name,
@@ -217,7 +217,7 @@ class User {
 
     /**Delete
      * inputs: userId
-     * outputs: none
+     * outputs: userId
      * NotFound error if user is not found
      */
 

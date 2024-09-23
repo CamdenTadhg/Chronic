@@ -4,27 +4,15 @@
 ## Plan API Use (9/15)
 
 ## Write Back End (9/19-9/29)
-    ## Diagnosis Routes & Models
-        - write model tests
-            - Diagnosis.create
-            - Diagnosis.getAll
-            - Diagnosis.getOne
-            - Diagnosis.edit
+        - write models (9/23)
             - Diagnosis.delete
+            - Diagnosis.userConnect
             - Diagnosis.userUpdate
             - Diagnosis.userDelete
             - COMMIT
-        - write models
-            - Diagnosis.create
-            - Diagnosis.getAll
-            - Diagnosis.getOne
-            - Diagnosis.edit
-            - Diagnosis.delete
-            - Diagnosis.userUpdate
+        - write route tests (9/23)
             - COMMIT
-        - write route tests
-            - COMMIT
-        - write routes
+        - write routes (9/23)
             - new diagnosis schema
             - edit diagnosis schema
             - create/select diagnosis and connect it to a user
@@ -36,7 +24,7 @@
             - delete diagnosis
             - COMMIT
     ## Symptom Routes & Models
-        - write model tests
+        - write model tests (9/23)
             - COMMIT
         - write models
             - create symptom

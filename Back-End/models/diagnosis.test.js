@@ -88,7 +88,7 @@ describe('Diagnosis.getAll', function(){
 
 /**Diagnosis.getOne */
 describe('Diagnosis.getOne', function(){
-    test('works with valid user', async function(){
+    test('works with valid diagnosis', async function(){
         const diagnosisId = await db.query(`SELECT diagnosis_id FROM diagnoses WHERE diagnosis = 'D1'`);
         const diagnosis = await Diagnosis.getOne(diagnosisId);
         expect(diagnosis).toEqual({
@@ -97,7 +97,7 @@ describe('Diagnosis.getOne', function(){
             synonyms: ['d1', 'disease']
         });
     });
-    test('NotFound error with invalid user', async function(){
+    test('NotFound error with invalid diagnosis', async function(){
         try {
             await Diagnosis.getOne('D19');
             fail();
@@ -170,6 +170,43 @@ describe('Diagnosis.delete', function(){
     });
 });
 
+/**Diagnosis.userConnect */
+describe('Diagnosis.userConnect', async function(){
+    const userId = await db.query(`SELECT user_id FROM users WHERE email = 'u2@test.com'`);
+    const diagnosisId = await db.query(`SELECT diagnosis_id FROM diagnoses WHERE diagnosis = 'D1'`);
+    test('works with valid data', async function(){
+        const userDiagnosis = await Diagnosis.userConnect(userId, diagnosisId, {
+            keywords: ['vertigo']
+        });
+        expect(userDiagnosis).toEqual({
+            userId: userId,
+            diagnosisId: diagnosisId,
+            keywords: ['vertigo']
+        });
+        const found = await db.query(`SELECT * FROM users_diagnoses WHERE user_id = $1 AND diagnosis_id = $2`, [userId, diagnosisId]);
+    });
+    test('NotFound error with invalid diagnosis', async function(){
+        try {
+            await Diagnosis.userConnect(userId, 0, {
+                keywords: ['pain']
+            });
+            fail();
+        } catch(err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+    test('NotFound error with invalid user', async function(){
+        try {
+            await Diagnosis.userConnect(0, diagnosisId, {
+                keywords: ['pain']
+            });
+            fail();
+        } catch(err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+});
+
 /**Diagnosis.userUpdate */
 describe('Diagnosis.userUpdate', async function(){
     const userId = await db.query(`SELECT user_id from users WHERE email = 'u1@test.com'`);
@@ -206,8 +243,8 @@ describe('Diagnosis.userUpdate', async function(){
     });
 });
 
-/**Diagnosis.userDelete */
-describe('Diagnosis.userDelete', async function(){
+/**Diagnosis.userDisconnect */
+describe('Diagnosis.userDisconnect', async function(){
     const userId = await db.query(`SELECT user_id from users WHERE email = 'u1@test.com'`);
     const diagnosisId = await db.query(`SELECT diagnosis_id from diagnoses WHERE diagnosis = 'D1'`);
     test('works with valid data', async function(){
