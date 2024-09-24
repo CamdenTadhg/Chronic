@@ -15,6 +15,8 @@ const {
     u2Token,
     u3Token
 } = require('./_testCommon');
+const { default: test } = require("node:test");
+const { expect } = require("vitest");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
@@ -331,8 +333,9 @@ describe('POST /diagnoses/:diagnosisId/users/:userId', function(){
     });
     test('works for matching user with new diagnosis', async function(){
         const resp = await request(app)
-            .post('/diagnoses/mast%20cell%20activation%20syndrome/users/1/')
+            .post('/diagnoses/0/users/1/')
             .send({
+                diagnosis: 'Mast Cell Activation Syndrome',
                 keywords: ['allergy']
             })
             .set('authorization', u1Token);
@@ -344,6 +347,10 @@ describe('POST /diagnoses/:diagnosisId/users/:userId', function(){
                 keywords: ['allergy']
             }
         });
+        const found = await request(app)
+            .get(`/diagnoses/${resp.body.userDiagnosis.diagnosisId}`)
+            .set('authorization', u2Token)
+        expect(found).toBeTruthy();
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
@@ -412,13 +419,54 @@ describe('POST /diagnoses/:diagnosisId/users/:userId', function(){
     });
 });
 
+/**GET diagnoses/:diagnosisId/users/:userId */
+describe('GET diagnoses/:diagnosisId/users/:userId', function(){
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .get('/diagnoses/1/users/1/')
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual({
+                userId: 1,
+                diagnosisId: 1,
+                keywords: ['pain']
+        });
+    });
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .get('/diagnoses/1/users/1/')
+            .set('authorization', u1Token);
+        expect(resp.body).toEqual({
+                userId: 1,
+                diagnosisId: 1,
+                keywords: ['pain']
+        });
+    });
+    test('forbidden for non-matching user', async function(){
+        const resp = await request(app)
+            .get('/diagnoses/1/users/1/')
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .get('/diagnoses/1/users/1/')
+        expect(resp.statusCode).toEqual(401);
+    });
+    test('notfound for invalid userDiagnosis', async function(){
+        const resp = await request(app)
+            .get('/diagnoses/1/users/2')
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toContain('No such userDiagnosis exists');
+    });
+});
 
 /**PATCH diagnoses/:diagnosisId/users/:userId */
 
-describe('POST /diagnosis/:diagnosisId/users/:userId', function(){
+describe('PATCH /diagnosis/:diagnosisId/users/:userId', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .post('/diagnoses/1/users/1/')
+            .patch('/diagnoses/1/users/1/')
             .send({
                 keywords: ['lethargy']
             })
@@ -491,7 +539,7 @@ describe('POST /diagnosis/:diagnosisId/users/:userId', function(){
 
 /**DELETE diagnoses/:diagnosisId/users/:userId */
 
-describe('POST /diagnosis/:diagnosisId/users/:userId', function(){
+describe('DELETE /diagnosis/:diagnosisId/users/:userId', function(){
     test('works for admin', async function(){
         const resp = await request(app)
             .delete('/diagnoses/1/users/1/')

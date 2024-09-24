@@ -156,6 +156,25 @@ class Symptom{
         return userSymptom;
     };
 
+    /**UserGet
+     * inputs: userId, symptomId
+     * outputs: {userId, symptomId}
+     * NotFound error if userSymptom is not found
+     */
+
+    static async userGet(userId, symptomId){
+        const result = await db.query(
+            `SELECT user_id AS 'userId',
+                    symptom_id AS 'symptomId'
+            FROM users_symptoms
+            WHERE user_id = $1 AND symptom_id = $2`,
+            [userId, symptomId]
+        );
+        const userSymptom = results.rows[0];
+        if (!userSymptom) throw new NotFoundError('No such userSymptom exists');
+        return userSymptom;
+    }
+
     /**UserChange
      * inputs: userId, symptomId, {symptomId, symptom}
      * outputs: {userId, symptomId, symptom}
@@ -256,6 +275,11 @@ class Symptom{
      */
     
     static async getAllTracking(userId){
+        const user = await db.query(
+            `SELECT user_id 
+            FROM users
+            WHERE user_id = $1`,[userId]);
+        if (!user) throw new NotFoundError('No such user exists');
         const result = await db.query(
             `SELECT st.symtrack_id AS 'symtrackId',
                     st.user_id AS 'userId',
@@ -275,6 +299,7 @@ class Symptom{
                 WHEN st.timespan = '8 PM-12 AM THEN 5
                 END`,
                 [userId]);
+        if(!result.rows[0]) return [];
         return result.rows;
     };
 

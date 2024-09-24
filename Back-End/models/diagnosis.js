@@ -179,6 +179,26 @@ class Diagnosis{
         return userDiagnosis;
     };
 
+    /**UserGet
+     * inputs: userId, diagnosisId
+     * output: {userId, diagnosisId, keywords}
+     * NotFound error if userDiagnosis record is not found
+     */
+
+    static async userGet(userId, diagnosisId){
+        const result = await db.query(
+            `SELECT user_id AS 'userId',
+                    diagnosis_id AS 'diagnosisId',
+                    keywords
+            FROM users_diagnoses
+            WHERE user_id = $1 AND diagnosis_id = $2`,
+            [userId, diagnosisId]
+        );
+        const userDiagnosis = results.rows[0];
+        if (!userDiagnosis) throw new NotFoundError('No such userDiagnosis exists');
+        return userDiagnosis;
+    }
+
     /**UserUpdate
      * inputs: userId, diagnosisId, {keywords[]}
      * output: {userId, diagnosisId, keywords}

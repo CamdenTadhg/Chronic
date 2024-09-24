@@ -10,7 +10,8 @@ const Diagnosis = require('../models/diagnosis');
 const diagnosisNewSchema = require('../schemas/diagnosisNew.json');
 const diagnosisUpdateSchema = require('../schemas/diagnosisUpdate.json');
 const userDiagnosisNewSchema = require('../schemas/userDianosisNew.json');
-const userDiagnosisUpdateSchema = require('../shemas/userDiagnosisUpdate.json');
+const userDiagnosisUpdateSchema = require('../schemas/userDiagnosisUpdate.json');
+const userDiagnosisNewDiagnosisSchema = require('../schemas/userDiagnosisNewDiagnosis.json')
 
 const router = express.Router();
 
@@ -113,15 +114,44 @@ router.delete('/:diagnosisId', ensureLoggedIn, ensureAdmin, async function (req,
 */
 
 router.post('/diagnoses/:diagnosisId/users/:userId', ensureLoggedIn, ensureAdminOrSelf, async function (req, res, next){
+    let userDiagnosis;
     try{
-        const validator = jsonschema.validate(req.body, userDiagnosisNewSchema);
-        if (!validator.valid){
-            const errs = validator.errors.map(e => e.stack);
-            throw new BadRequestError(errs);
+        if (req.params.diagnosisId === 0){
+            const validator = jsonschema.validate(req.body, userDiagnosisNewDiagnosisSchema);
+            if (!validator.valid){
+                const errs = validator.errors.map(e => e.stack);
+                throw new BadRequestError(errs);
+            }
+            const newDiagnosis = await Diagnosis.create(req.body.diagnosis);
+            userDiagnosis = await Diagnosis.userConnect(req.params.userId, 
+                newDiagnosis.diagnosisId, req.body.keywords);
+        } else {
+            const validator = jsonschema.validate(req.body, userDiagnosisNewSchema);
+            if (!validator.valid){
+                const errs = validator.errors.map(e => e.stack);
+                throw new BadRequestError(errs);
+            }
+            userDiagnosis = await Diagnosis.userConnect(req.params.userId, req.params.diagnosisId, req.body);
+
         }
-        const userDiagnosis = await Diagnosis.userConnect(req.params.userId, req.params.diagnosisId, req.body);
         return res.status(201).json({userDiagnosis});
     } catch(err) {
+        return next(err);
+    }
+});
+
+/** GET /diagnoses/:diagnosisId/users/:userId => userDiagnosis: {userId, diagnosisId, keywords} 
+ * 
+ * Gets a single userDiagnosis record
+ * 
+ * Authorization: admin or self
+*/
+
+router.get('/diagnoses/:diagnosisId/users/:userId', ensureLoggedIn, ensureAdminOrSelf, async function(req, res, next){
+    try{
+        const userDiagnosis = await Diagnosis.userGet(req.params.userId, req.params.diagnosisId);
+        return res.json({userDiagnosis});
+    } catch(err){
         return next(err);
     }
 });

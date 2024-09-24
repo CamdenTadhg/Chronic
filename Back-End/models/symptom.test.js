@@ -17,6 +17,7 @@ const {
 const { describe, default: test } = require('node:test');
 const { expect } = require('vitest');
 const { fail } = require('assert');
+const { L } = require('vitest/dist/chunks/reporters.C_zwCd4j.js');
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
@@ -151,6 +152,41 @@ describe('Symptom.userConnect', function(){
     });
 });
 
+/**Symptom.userGet */
+describe('Symptom.userGet', function(){
+    test('works with valid connection', async function(){
+        const userSymptom = await Symptom.userGet(1, 1);
+        expect(userSymptom).toEqual({
+            userId: 1,
+            symptomId: 1,
+        });
+    });
+    test('NotFound with invalid symptom', async function(){
+        try {
+            await Symptom.userGet(1, 0);
+            fail();
+        } catch(err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+    test('NotFound with invalid user', async function(){
+        try {
+            await Symptom.userGet(0, 1);
+            fail();
+        } catch(err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+    test('NotFound with invalid userSymptom', async function(){
+        try {
+            await Symptom.userGet(1, 3);
+            fail();
+        } catch(err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+})
+
 /**Symptom.userChange */
 describe('Symptom.userChange', function(){
     test('works for valid user & symptom', async function(){
@@ -284,6 +320,10 @@ describe('Symptom.getAllTracking', function(){
             }
         ])
     });
+    test('Returns empty array if no tracking information', async function(){
+        const userRecords = await Symptom.getAllTracking(2);
+        expect(userRecords).toEqual([])
+    })
     test('NotFound error with invalid user', async function(){
         try{
             await Symptom.getAllTracking(0)

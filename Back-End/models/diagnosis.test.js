@@ -17,6 +17,7 @@ const {
     u3Token
 } = require('./_testCommon.js');
 const { expect } = require("vitest");
+const { describe, default: test } = require("node:test");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
@@ -208,6 +209,42 @@ describe('Diagnosis.userConnect', async function(){
     });
 });
 
+/**Diagnosis.userGet */
+describe('Diagnosis.userGet', function(){
+    test('works with valid connection', async function(){
+        const userDiagnosis = await Diagnosis.userGet(1, 1);
+        expect(userDiagnosis).toEqual({
+            userId: 1,
+            diagnosisId: 1,
+            keywords: ["pain"]
+        });
+    });
+    test('NotFound with invalid diagnosis', async function(){
+        try {
+            await Diagnosis.userGet(1, 0);
+            fail();
+        } catch(err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+    test('NotFound with invalid user', async function(){
+        try {
+            await Diagnosis.userGet(0, 1);
+            fail();
+        } catch(err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+    test('NotFound with invalid userDiagnosis', async function(){
+        try {
+            await Diagnosis.userGet(1, 3);
+            fail();
+        } catch(err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+});
+
 /**Diagnosis.userUpdate */
 describe('Diagnosis.userUpdate', async function(){
     const userId = await db.query(`SELECT user_id from users WHERE email = 'u1@test.com'`);
@@ -242,6 +279,16 @@ describe('Diagnosis.userUpdate', async function(){
             expect(err instanceof NotFoundError).toBeTruthy();
         }
     });
+    test('NotFound with invalid userDiagnosis', async function(){
+        try {
+            await Diagnosis.userUpdate(1, 3, {
+                keywords: ['pain']
+            });
+            fail();
+        } catch(err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        } 
+    });
 });
 
 /**Diagnosis.userDisconnect */
@@ -264,6 +311,14 @@ describe('Diagnosis.userDisconnect', async function(){
     test('NotFound error with invalid user', async function(){
         try {
             await Diagnosis.deleteUser(0, diagnosisId);
+            fail();
+        } catch(err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+    test('NotFound with invalid userDiagnosis', async function(){
+        try {
+            await Diagnosis.deleteUser(1, 3);
             fail();
         } catch(err) {
             expect(err instanceof NotFoundError).toBeTruthy();
