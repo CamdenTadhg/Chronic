@@ -5,33 +5,7 @@
 
 ## Write Back End (9/19-9/29)
     ## Symptom Routes & Models
-        - write route tests (9/24)
-            - GET /symptom/:symptomId/users/:userId/tracking/:symtrackId
-            - GET /symptom/:symptomId/users/:userId/tracking/date
-            - PATCH /symptom/:symptomId/users/:userId/tracking/:symtrackId
-            - DELETE /symptom/:symptomId/users/:userId/tracking/:symtrackId
-            - DELETE /symptom/:symptomId/users/:userId/tracking/date
-            - COMMIT
         - write routes (9/26)
-            - new symptom schema
-            - edit symptom schema
-            - new user symptom schema
-            - change user symptom schema
-            - new symptom tracking record schema
-            - edit symptom tracking record schema
-
-            - create/select symptom and connect it to a user 
-            - create a symptom
-            - get list of all symptoms
-            - get individual symptom
-            - update symptom
-            - delete symptom
-            - change symptom user connection
-            - delete symptom user connection
-            - create symptom tracking record
-            - get list of all symptom tracking records for one user
-            - get individual symptom tracking record
-            - get all symptom tracking records for a single day
             - update symptom tracking record
             - delete symptom tracking record
             - delete symptom tracking records for a single day

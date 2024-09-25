@@ -368,8 +368,10 @@ describe('GET /symptoms/:symptomId/users/:userId', function(){
             .get('/symptoms/1/users/1/')
             .set('authorization', u2Token);
         expect(resp.body).toEqual({
+            userSymptom: {
                 userId: 1,
                 symptomId: 1
+            }
         });
     });
     test('works for matching user', async function(){
@@ -377,8 +379,10 @@ describe('GET /symptoms/:symptomId/users/:userId', function(){
             .get('/symptoms/1/users/1/')
             .set('authorization', u1Token);
         expect(resp.body).toEqual({
+            userSymptom: {
                 userId: 1,
                 symptomId: 1
+            }
         });
     });
     test('forbidden for non-matching user', async function(){
@@ -411,8 +415,10 @@ describe('PATCH /symptoms/:symptomId/users/:userId', function(){
             })
             .set('authorization', u2Token);
         expect(resp.body).toEqual({
-            userId: 1,
-            symptomId: 2
+            userSymptom: {
+                userId: 1,
+                symptomId: 2
+            }
         });
     });
     test('works for matching user', async function(){
@@ -423,8 +429,10 @@ describe('PATCH /symptoms/:symptomId/users/:userId', function(){
             })
             .set('authorization', u1Token);
         expect(resp.body).toEqual({
-            userId: 1,
-            symptomId: 3
+            userSymptom: {
+                userId: 1,
+                symptomId: 2
+            }
         });
     });
     test('forbidden for non-matching user', async function(){
@@ -522,15 +530,16 @@ describe('POST /symptoms/users/:userId/tracking', function(){
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
-            symtrackId: expect.any(Number),
-            userId: 1,
-            symptomId: 1,
-            trackDate: '2024-09-24', 
-            timespan: '12-8 AM', 
-            severity: 3,
-            trackedAt: expect.any(Date)
+            trackingRecord: {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1,
+                trackDate: '2024-09-24', 
+                timespan: '12-8 AM', 
+                severity: 3,
+                trackedAt: expect.any(Date)
+            }
         });
-
     });
     test('works for matching user', async function(){
         const resp = await request(app)
@@ -544,13 +553,15 @@ describe('POST /symptoms/users/:userId/tracking', function(){
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
-            symtrackId: expect.any(Number),
-            userId: 1,
-            symptomId: 1,
-            trackDate: '2024-09-24', 
-            timespan: '8 AM-12 PM', 
-            severity: 1,
-            trackedAt: expect.any(Date)
+            trackingRecord: {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1,
+                trackDate: '2024-09-24', 
+                timespan: '12-8 AM', 
+                severity: 3,
+                trackedAt: expect.any(Date)
+            }
         });
     });
     test('forbidden for non-matching user', async function(){
@@ -631,69 +642,73 @@ describe('GET /symptoms/users/:userId/tracking', function(){
         const resp = await request(app)
             .get('/symptoms/users/1/tracking')
             .set('authorization', u2Token);
-        expect(resp.body).toEqual([
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '12-8 AM',
-                severity: 3,
-                trackedAt: expect.any(Date)
-            },
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '8 AM-12 PM',
-                severity: 2,
-                trackedAt: expect.any(Date)
-            },
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '12-4 PM',
-                severity: 1,
-                trackedAt: expect.any(Date)
-            }
-        ]);
+        expect(resp.body).toEqual({
+            trackingRecords: [
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '12-8 AM',
+                    severity: 3,
+                    trackedAt: expect.any(Date)
+                },
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '8 AM-12 PM',
+                    severity: 2,
+                    trackedAt: expect.any(Date)
+                },
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '12-4 PM',
+                    severity: 1,
+                    trackedAt: expect.any(Date)
+                }
+            ]      
+        });
     });
     test('works for matching user', async function(){
         const resp = await request(app)
             .get('/symptoms/users/1/tracking')
             .set('authorization', u1Token);
-        expect(resp.body).toEqual([
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '12-8 AM',
-                severity: 3,
-                trackedAt: expect.any(Date)
-            },
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '8 AM-12 PM',
-                severity: 2,
-                trackedAt: expect.any(Date)
-            },
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '12-4 PM',
-                severity: 1,
-                trackedAt: expect.any(Date)
-            }
-        ]);
+        expect(resp.body).toEqual({
+            trackingRecords: [
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '12-8 AM',
+                    severity: 3,
+                    trackedAt: expect.any(Date)
+                },
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '8 AM-12 PM',
+                    severity: 2,
+                    trackedAt: expect.any(Date)
+                },
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '12-4 PM',
+                    severity: 1,
+                    trackedAt: expect.any(Date)
+                }
+            ] 
+        });
     });
     test('returns empty array if no tracking data', async function(){
         const resp = await request(app)
@@ -781,35 +796,37 @@ describe('GET /symptoms/users/:userId/tracking/date', function(){
                 trackDate: '2024-09-21'
             })
             .set('authorization', u2Token);
-        expect(resp.body).toEqual([
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '12-8 AM',
-                severity: 3,
-                trackedAt: expect.any(Date)
-            },
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '8 AM-12 PM',
-                severity: 2,
-                trackedAt: expect.any(Date)
-            },
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '12-4 PM',
-                severity: 1,
-                trackedAt: expect.any(Date)
-            }
-        ]);
+        expect(resp.body).toEqual({
+            trackingRecords: [
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '12-8 AM',
+                    severity: 3,
+                    trackedAt: expect.any(Date)
+                },
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '8 AM-12 PM',
+                    severity: 2,
+                    trackedAt: expect.any(Date)
+                },
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '12-4 PM',
+                    severity: 1,
+                    trackedAt: expect.any(Date)
+                }
+            ]
+        });
     });
     test('works for matching user', async function(){
         const resp = await request(app)
@@ -818,35 +835,37 @@ describe('GET /symptoms/users/:userId/tracking/date', function(){
                 trackDate: '2024-09-21'
             })
             .set('authorization', u1Token);
-        expect(resp.body).toEqual([
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '12-8 AM',
-                severity: 3,
-                trackedAt: expect.any(Date)
-            },
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '8 AM-12 PM',
-                severity: 2,
-                trackedAt: expect.any(Date)
-            },
-            {
-                symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
-                trackDate: '2024-09-21',
-                timespan: '12-4 PM',
-                severity: 1,
-                trackedAt: expect.any(Date)
-            }
-        ]);
+        expect(resp.body).toEqual({
+            trackingRecords: [
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '12-8 AM',
+                    severity: 3,
+                    trackedAt: expect.any(Date)
+                },
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '8 AM-12 PM',
+                    severity: 2,
+                    trackedAt: expect.any(Date)
+                },
+                {
+                    symtrackId: expect.any(Number),
+                    userId: 1,
+                    symptomId: 1, 
+                    trackDate: '2024-09-21',
+                    timespan: '12-4 PM',
+                    severity: 1,
+                    trackedAt: expect.any(Date)
+                }
+            ]
+        });
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)

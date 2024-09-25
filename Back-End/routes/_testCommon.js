@@ -73,7 +73,7 @@ async function commonBeforeAll() {
         user_id: 1,
         symptom_id: 1, 
         track_date: '2024-09-21',
-        timespan: '12-8 AM',
+        timespan: '12-4 AM',
         severity: 3
     });
     await Symptom.track({

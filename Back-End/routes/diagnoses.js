@@ -37,7 +37,7 @@ router.post('/', ensureLoggedIn, ensureAdmin, async function(req, res, next){
     }
 })
 
-/** GET /diagnoses/ => {diagnoses: [{diagnosisId, diagnosis, synonyms}, ...]
+/** GET /diagnoses/ => {diagnoses: [{diagnosisId, diagnosis, synonyms}, ...]}
  * 
  * Returns list of all diagnoses
  * 
@@ -132,7 +132,6 @@ router.post('/diagnoses/:diagnosisId/users/:userId', ensureLoggedIn, ensureAdmin
                 throw new BadRequestError(errs);
             }
             userDiagnosis = await Diagnosis.userConnect(req.params.userId, req.params.diagnosisId, req.body);
-
         }
         return res.status(201).json({userDiagnosis});
     } catch(err) {
@@ -186,9 +185,8 @@ router.patch('/diagnoses/:diagnosisId/users/:userId', ensureLoggedIn, ensureAdmi
 
 router.delete('/diagnoses/:diagnosisId/users/:userId', ensureLoggedIn, ensureAdminOrSelf, async function (req, res, next){
     try {
-        const userDiagnosis = await Diagnosis.userDisconnect(req.params.userId, req.params.diagnosisId);
+        await Diagnosis.userDisconnect(req.params.userId, req.params.diagnosisId);
         return res.json({deleted: [`User ${req.params.userId}`, `Diagnosis ${req.params.diagnosisId}`]})
-
     } catch(err) {
         return next(err);
     }

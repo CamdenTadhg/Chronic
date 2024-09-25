@@ -74,7 +74,7 @@ async function commonBeforeAll() {
 
     await db.query(`
         INSERT INTO symptom_tracking (user_id, symptom_id, track_date, timespan, severity)
-        VALUES  (${u1Id}, ${s1Id}, '2024-09-21', '12-8 AM', 3),
+        VALUES  (${u1Id}, ${s1Id}, '2024-09-21', '12-4 AM', 3),
                 (${u1Id}, ${s1Id}, '2024-09-21', '8 AM-12 PM', 2),
                 (${u1Id}, ${s1Id}, '2024-09-21', '12-4 PM', 1)`);
 

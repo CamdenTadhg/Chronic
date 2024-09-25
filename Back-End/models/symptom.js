@@ -103,7 +103,7 @@ class Symptom{
      * NotFound error on symptom not found
      */
 
-    static async delete(diagnosisId){
+    static async delete(symptomId){
         let result = await db.query(
             `DELETE
             FROM symptoms
@@ -310,7 +310,7 @@ class Symptom{
      * NotFound error if tracking record not found
      */
 
-    static async getOneTracking(symtrackId){
+    static async getOneTracking(symtrackId, userId){
         const result = await db.query(
             `SELECT symtrack_id AS 'symtrackId',
                     user_id AS 'userId',
@@ -319,8 +319,8 @@ class Symptom{
                     timespan,
                     severity
             FROM symptom_tracking
-            WHERE symtrack_id = $1`,
-            [symtrackId]);
+            WHERE symtrack_id = $1 AND user_id = $2`,
+            [symtrackId, userId]);
         const trackingRecord = result.rows[0];
         if (!trackingRecord) throw new NotFoundError('No such tracking record exists');
         return trackingRecord;
@@ -333,7 +333,7 @@ class Symptom{
      * NotFound error with invalid user
     */
 
-    static async getDayTracking(userId, date){
+    static async getDayTracking(userId, trackDate){
         const userCheck = await db.query(
             `SELECT user_id FROM users
             WHERE user_id = $1`,
@@ -358,7 +358,7 @@ class Symptom{
                 WHEN st.timespan = '4-8 PM' THEN 4
                 WHEN st.timespan = '8 PM-12 AM THEN 5
                 END`,
-                [userId, date]);
+                [userId, trackDate]);
         if (!result.rows[0]) return []
         return result.rows;
     };
@@ -369,7 +369,7 @@ class Symptom{
      * NotFound error with invalid tracking record
      */
 
-    static async editTracking(userId, symptomId, date, timespan, {severity}){
+    static async editTracking(userId, symptomId, trackDate, timespan, severity){
         const result = await db.query(
             `UPDATE symptom_tracking
             SET severity = $1, track_date = CURRENT_TIMESTAMP
@@ -381,7 +381,7 @@ class Symptom{
                         track_date AS 'trackDate',
                         timespan,
                         severity`,
-            [severity, userId, symptomId, date, timespan]);
+            [severity, userId, symptomId, trackDate, timespan]);
         const trackingRecord = result.rows[0];
         if (!trackingRecord) throw new NotFoundError('No such tracking record exists');
         return trackingRecord;
@@ -393,14 +393,14 @@ class Symptom{
      * NotFound error with invalid tracking record
      */
 
-    static async deleteTracking(userId, symptomId, date, timespan){
+    static async deleteTracking(userId, symptomId, trackDate, timespan){
         let result = await db.query(
             `DELETE 
             FROM symptom_tracking
             WHERE user_id = $1 AND symptom_id = $2
             AND track_date = $3 AND timespan = $4
             RETURNING symtrack_id AS 'symtrackId'`,
-            [userId, symptomId, date, timespan]);
+            [userId, symptomId, trackDate, timespan]);
         const trackingRecord = result.rows[0];
         if (!trackingRecord) throw new NotFoundError('No such tracking record exists');
         return trackingRecord;

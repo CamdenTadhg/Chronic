@@ -1,0 +1,14 @@
+{
+    "type": "object",
+    "properties": {
+        "severity": {
+            "type": "number",
+            "maximum": 5,
+            "minimum": 0
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "severity"
+    ]
+}

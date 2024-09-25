@@ -1,0 +1,12 @@
+{
+    "type": "object",
+    "properties": {
+        "symptomId": {
+            "type": "number"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "symptomId"
+    ]
+}
