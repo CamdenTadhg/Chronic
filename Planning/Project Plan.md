@@ -6,17 +6,6 @@
 ## Write Back End (9/19-9/29)
     ## Symptom Routes & Models
         - write route tests (9/24)
-            - POST /symptoms
-            - GET /symptoms
-            - GET /symptoms/:symptomId
-            - PATCH /symptoms/:symptomId
-            - DELETE /symptoms/:symptomId
-            - POST /symptoms/:symptomId/users/:userId
-            - GET /symptoms/:symptomId/users/:userId
-            - PATCH /symptoms/:symptomId/users/:userId
-            - DELETE /symptoms/:symptomId/users/:userId
-            - POST /symptom/:symptomId/users/:usersId/tracking
-            - GET /symptom/:symptomId/users/:userId/tracking
             - GET /symptom/:symptomId/users/:userId/tracking/:symtrackId
             - GET /symptom/:symptomId/users/:userId/tracking/date
             - PATCH /symptom/:symptomId/users/:userId/tracking/:symtrackId

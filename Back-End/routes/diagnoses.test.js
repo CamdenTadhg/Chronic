@@ -550,7 +550,7 @@ describe('DELETE /diagnosis/:diagnosisId/users/:userId', function(){
         const resp = await request(app)
             .delete('/diagnoses/3/users/3/')
             .set('authorization', u3Token);
-        expect(resp.body).toEqual({deleted: [3, 3]});
+        expect(resp.body).toEqual({deleted: [`User 3`, `Diagnosis 3`]});
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)

@@ -237,7 +237,7 @@ describe('Symptom.track', function(){
         const symptomTracking = Symptom.track({
             userId: 1,
             symptomId: 1,
-            date: '2024-09-23',
+            trackDate: '2024-09-23',
             timespan: '8 AM-12 PM',
             severity: 3
         });
@@ -245,7 +245,7 @@ describe('Symptom.track', function(){
             symtrack_id: expect.any(Number),
             userId: 1,
             symptomId: 1,
-            date: '2024-09-23', 
+            trackDate: '2024-09-23', 
             timespan: '8 AM-12 PM',
             severity: 3,
             trackedAt: expect.any(Date)
@@ -261,7 +261,7 @@ describe('Symptom.track', function(){
             Symptom.track({
                 userId: 1,
                 symptomId: 3,
-                date: '2024-09-23', 
+                trackDate: '2024-09-23', 
                 timespan: '12-8 AM',
                 severity: 1
             });
@@ -275,7 +275,7 @@ describe('Symptom.track', function(){
             Symptom.track({
                 userId: 1,
                 symptomId: 1,
-                date: '2024-09-21', 
+                trackDate: '2024-09-21', 
                 timespan: '12-8 AM',
                 severity: 1
             });
@@ -295,7 +295,7 @@ describe('Symptom.getAllTracking', function(){
                 symtrackId: expect.any(Number),
                 userId: 1,
                 symptomId: 1, 
-                date: '2024-09-21',
+                trackDate: '2024-09-21',
                 timespan: '12-8 AM', 
                 severity: 3,
                 trackedAt: expect.any(Date)
@@ -304,7 +304,7 @@ describe('Symptom.getAllTracking', function(){
                 symtrackId: expect.any(Number),
                 userId: 1,
                 symptomId: 1, 
-                date: '2024-09-21',
+                trackDate: '2024-09-21',
                 timespan: '8 AM-12 PM', 
                 severity: 2,
                 trackedAt: expect.any(Date) 
@@ -313,7 +313,7 @@ describe('Symptom.getAllTracking', function(){
                 symtrackId: expect.any(Number),
                 userId: 1,
                 symptomId: 1, 
-                date: '2024-09-21',
+                trackDate: '2024-09-21',
                 timespan: '12-4 PM', 
                 severity: 1,
                 trackedAt: expect.any(Date)
@@ -343,7 +343,7 @@ describe('Symptom.getOneTracking', function(){
             symtrackId: symtrackId,
             userId: 1,
             symptomId: 1,
-            date: '2024-09-21', 
+            trackDate: '2024-09-21', 
             timespan: '12-4 PM',
             severity: 1,
             trackedAt: expect.any(Date)
@@ -368,7 +368,7 @@ describe('Symptom.getDayTracking', function(){
                 symtrackId: expect.any(Number),
                 userId: 1,
                 symptomId: 1, 
-                date: '2024-09-21',
+                trackDate: '2024-09-21',
                 timespan: '12-8 AM', 
                 severity: 3,
                 trackedAt: expect.any(Date)
@@ -377,7 +377,7 @@ describe('Symptom.getDayTracking', function(){
                 symtrackId: expect.any(Number),
                 userId: 1,
                 symptomId: 1, 
-                date: '2024-09-21',
+                trackDate: '2024-09-21',
                 timespan: '8 AM-12 PM', 
                 severity: 2,
                 trackedAt: expect.any(Date) 
@@ -386,7 +386,7 @@ describe('Symptom.getDayTracking', function(){
                 symtrackId: expect.any(Number),
                 userId: 1,
                 symptomId: 1, 
-                date: '2024-09-21',
+                trackDate: '2024-09-21',
                 timespan: '12-4 PM', 
                 severity: 1,
                 trackedAt: expect.any(Date)
@@ -410,15 +410,19 @@ describe('Symptom.getDayTracking', function(){
 /**Symptom.editTracking */
 describe('Symptom.editTracking', function(){
     test('works with valid tracking record', async function(){
-        const symptrackRecord = await Symptom.editTracking(1, 1, '2024-09-21', '12-8 AM', {severity: 5});
-        expect(symptrackRecord).toEqual({
+        const symtrackRecord = await Symptom.editTracking(1, 1, '2024-09-21', '12-8 AM', {severity: 5});
+        expect(symtrackRecord).toEqual({
             symtrack_id: expect.any(Number),
             userId: 1,
             symptomId: 1, 
-            date: '2024-09-21', 
+            trackDate: '2024-09-21', 
             timespan: '12-8 AM',
-            severity: 5
+            severity: 5,
+            trackedAt: expect.any(Number)
         });
+        const currentTime = new Date();
+        const timeDifference = Math.abs(currentTime - symtrackRecord.trackedAt);
+        expect(timeDifference).toBeLessThan(5000);
     });
     test('NotFound error with invalid tracking record', async function(){
         try{

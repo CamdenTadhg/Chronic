@@ -403,87 +403,656 @@ describe('GET /symptoms/:symptomId/users/:userId', function(){
 
 /** PATCH /symptoms/:symptomId/users/:userId */
 describe('PATCH /symptoms/:symptomId/users/:userId', function(){
-    test('works for admin', async function(){});
-    test('works for matching user', async function(){});
-    test('forbidden for non-matching user', async function(){});
-    test('unauthorized for anonymous', async function(){});
-    test('bad request with missing data', async function(){});
-    test('bad request with invalid data', async function(){});
-    test('not found for invalid userSymptom', async function(){});
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .patch('/symptoms/1/users/1')
+            .send({
+                symptomId: 2
+            })
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual({
+            userId: 1,
+            symptomId: 2
+        });
+    });
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .patch('/symptoms/1/users/1')
+            .send({
+                symptomId: 3
+            })
+            .set('authorization', u1Token);
+        expect(resp.body).toEqual({
+            userId: 1,
+            symptomId: 3
+        });
+    });
+    test('forbidden for non-matching user', async function(){
+        const resp = await request(app)
+            .patch('/symptoms/1/users/1')
+            .send({
+                symptomId: 3
+            })
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .patch('/symptoms/1/users/1')
+            .send({
+                symptomId: 3
+            })
+        expect(resp.statusCode).toEqual(401);
+    });
+    test('bad request with missing data', async function(){
+        const resp = await request(app)
+            .patch('/symptoms/2/users/2')
+            .send({})
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance requires property "symptomId"');
+    });
+    test('bad request with invalid data', async function(){
+        const resp = await request(app)
+            .patch('/symptoms/2/users/2')
+            .send({
+                symptomId: 'lethargy'
+            })
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance.symptomId');
+    });
+    test('not found for invalid userSymptom', async function(){
+        const resp = await request(app)
+            .patch('/symptoms/1/users/3')
+            .send({
+                symptomId: 2
+            })
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toContain('No such userSymptom exists');
+    });
 });
 
 /**DELETE /symptoms/:symptomId/users/:userId */
 describe('DELETE /symptoms/:symptomId/users/:userId', function(){
-    test('works for admin', async function(){});
-    test('works for matching user', async function(){});
-    test('forbidden for non-matching user', async function(){});
-    test('unauthorized for anonymous', async function(){});
-    test('not found for invalid userSymptom', async function(){});
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .delete('/symptoms/1/users/1')
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual({deleted: [`User 1`, `Symptom 1`]});
+    });
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .delete('/symptoms/1/users/1')
+            .set('authorization', u1Token);
+        expect(resp.body).toEqual({deleted: [`User 1`, `Symptom 1`]});
+    });
+    test('forbidden for non-matching user', async function(){
+        const resp = await request(app)
+            .delete('/symptoms/1/users/1')
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .delete('/symptoms/1/users/1')
+        expect(resp.statusCode).toEqual(401);
+    });
+    test('not found for invalid userSymptom', async function(){
+        const resp = await request(app)
+            .delete('/symptoms/1/users/3')
+            .set('authorization', u2Token)
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toContain('No such userSymptom exists');
+    });
 });
 
 /** POST /symptoms/users/:userId/tracking */
 describe('POST /symptoms/users/:userId/tracking', function(){
-    test('works for admin', async function(){});
-    test('works for matching user', async function(){});
-    test('forbidden for non-matching user', async function(){});
-    test('unauthorized for anonymous', async function(){});
-    test('bad request with missing data', async function(){});
-    test('bad request with invalid data', async function(){});
-    test('not found for invalid userSymptom', async function(){});
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .post('/symptoms/users/1/tracking')
+            .send({
+                symptomId: 1,
+                trackDate: '2024-09-24',
+                timespan: '12-8 AM',
+                severity: 3
+            })
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(201);
+        expect(resp.body).toEqual({
+            symtrackId: expect.any(Number),
+            userId: 1,
+            symptomId: 1,
+            trackDate: '2024-09-24', 
+            timespan: '12-8 AM', 
+            severity: 3,
+            trackedAt: expect.any(Date)
+        });
+
+    });
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .post('/symptoms/users/1/tracking')
+            .send({
+                symptomId: 1,
+                trackDate: '2024-09-24',
+                timespan: '8 AM-12 PM',
+                severity: 1
+            })
+            .set('authorization', u1Token);
+        expect(resp.statusCode).toEqual(201);
+        expect(resp.body).toEqual({
+            symtrackId: expect.any(Number),
+            userId: 1,
+            symptomId: 1,
+            trackDate: '2024-09-24', 
+            timespan: '8 AM-12 PM', 
+            severity: 1,
+            trackedAt: expect.any(Date)
+        });
+    });
+    test('forbidden for non-matching user', async function(){
+        const resp = await request(app)
+            .post('/symptoms/users/1/tracking')
+            .send({
+                symptomId: 1,
+                trackDate: '2024-09-24',
+                timespan: '12-4 PM',
+                severity: 1
+            })
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .post('/symptoms/users/1/tracking')
+            .send({
+                symptomId: 1,
+                trackDate: '2024-09-24',
+                timespan: '12-4 PM',
+                severity: 1
+            })
+        expect(resp.statusCode).toEqual(401);
+    });
+    test('bad request with missing data', async function(){
+        const resp = await request(app)
+            .post('/symptoms/users/1/tracking')
+            .send({
+                symptomId: 1,
+                trackDate: '2024-09-24',
+                severity: 1
+            })
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance requires property "timespan"');
+    });
+    test('bad request with invalid data', async function(){
+        const resp = await request(app)
+            .post('/symptoms/users/1/tracking')
+            .send({
+                symptomId: 1,
+                trackDate: '2024-09-24',
+                timespan: '12-8 PM',
+                severity: 1
+            })
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance.timespan');
+    });
+    test('bad request with duplicate tracking record', async function(){
+        const resp = await request(app)
+            .post('/symptoms/users/1/tracking')
+            .send({
+                symptomId: 1,
+                trackDate: '2024-09-21',
+                timespan: '12-8 AM',
+                severity: 4
+            })
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('That tracking record already exists');
+    });
+    test('not found for invalid userSymptom', async function(){
+        const resp = await request(app)
+            .post('/symptoms/users/3/tracking')
+            .send({
+                symptomId: 1,
+                trackDate: '2024-09-24',
+                timespan: '12-8 PM',
+                severity: 1
+            })
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toContain('No such userSymptom exists');
+    });
 });
 
 /** GET /symptoms/users/:userId/tracking */
 describe('GET /symptoms/users/:userId/tracking', function(){
-    test('works for admin', async function(){});
-    test('works for matching user', async function(){});
-    test('returns empty array if no tracking data', async function(){});
-    test('forbidden for non-matching user', async function(){});
-    test('unauthorized for anonymous', async function(){});
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .get('/symptoms/users/1/tracking')
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual([
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '12-8 AM',
+                severity: 3,
+                trackedAt: expect.any(Date)
+            },
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '8 AM-12 PM',
+                severity: 2,
+                trackedAt: expect.any(Date)
+            },
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '12-4 PM',
+                severity: 1,
+                trackedAt: expect.any(Date)
+            }
+        ]);
+    });
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .get('/symptoms/users/1/tracking')
+            .set('authorization', u1Token);
+        expect(resp.body).toEqual([
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '12-8 AM',
+                severity: 3,
+                trackedAt: expect.any(Date)
+            },
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '8 AM-12 PM',
+                severity: 2,
+                trackedAt: expect.any(Date)
+            },
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '12-4 PM',
+                severity: 1,
+                trackedAt: expect.any(Date)
+            }
+        ]);
+    });
+    test('returns empty array if no tracking data', async function(){
+        const resp = await request(app)
+            .get('/symptoms/users/3/tracking')
+            .set('authorization', u3Token);
+        expect(resp.body).toEqual([]);
+    });
+    test('forbidden for non-matching user', async function(){
+        const resp = await request(app)
+            .get('/symptoms/users/1/tracking')
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .get('/symptoms/users/1/tracking')
+        expect(resp.statusCode).toEqual(401);
+    });
 });
 
 /** GET /symptoms/users/:userId/tracking/:symtrackId */
-describe('GET /symptoms/users/:userId/tracking/:symtrackId', function(){
-    test('works for admin', async function(){});
-    test('works for matching user', async function(){});
-    test('forbidden for non-matching user', async function(){});
-    test('unauthorized for anonymous', async function(){});
-    test('not found for invalid tracking record', async function(){});
+describe('GET /symptoms/users/:userId/tracking/:symtrackId', async function(){
+    const symtrackId = await db.query(
+        `SELECT symtrack_id
+        FROM symptom_tracking
+        WHERE track_date = '2024-09-21 AND timespan = '12-8 AM'`
+    );
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .get(`/symptoms/users/1/tracking/${symtrackId}`)
+            .set('authorization', u2Token)
+        expect(resp.body).toEqual({
+            trackingRecord: {
+                symtrackId: symtrackId,
+                userId: 1,
+                symptomId: 1,
+                trackDate: '2024-09-21', 
+                timespan: '12-8 AM', 
+                severity: 3,
+                trackedAt: expect.any(Date)
+            }
+        });
+    });
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .get(`/symptoms/users/1/tracking/${symtrackId}`)
+            .set('authorization', u1Token)
+        expect(resp.body).toEqual({
+            trackingRecord: {
+                symtrackId: symtrackId,
+                userId: 1,
+                symptomId: 1,
+                trackDate: '2024-09-21', 
+                timespan: '12-8 AM', 
+                severity: 3,
+                trackedAt: expect.any(Date)
+            }
+        });
+    });
+    test('forbidden for non-matching user', async function(){
+        const resp = await request(app)
+            .get(`/symptoms/users/1/tracking/${symtrackId}`)
+            .set('authorization', u3Token)
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .get(`/symptoms/users/1/tracking/${symtrackId}`)
+        expect(resp.statusCode).toEqual(401);
+    });
+    test('not found for invalid tracking record', async function(){
+        const resp = await request(app)
+            .get(`/symptoms/users/1/tracking/0`)
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toContain('No such tracking record exists');
+    });
 });
 
 /** GET /symptoms/users/:userId/tracking/date */
 describe('GET /symptoms/users/:userId/tracking/date', function(){
-    test('works for admin', async function(){});
-    test('works for matching user', async function(){});
-    test('forbidden for non-matching user', async function(){});
-    test('unauthorized for anonymous', async function(){});
-    test('returns empty array if no tracking data', async function(){});
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .get('/symptoms/users/1/tracking/date')
+            .send({
+                trackDate: '2024-09-21'
+            })
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual([
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '12-8 AM',
+                severity: 3,
+                trackedAt: expect.any(Date)
+            },
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '8 AM-12 PM',
+                severity: 2,
+                trackedAt: expect.any(Date)
+            },
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '12-4 PM',
+                severity: 1,
+                trackedAt: expect.any(Date)
+            }
+        ]);
+    });
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .get('/symptoms/users/1/tracking/date')
+            .send({
+                trackDate: '2024-09-21'
+            })
+            .set('authorization', u1Token);
+        expect(resp.body).toEqual([
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '12-8 AM',
+                severity: 3,
+                trackedAt: expect.any(Date)
+            },
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '8 AM-12 PM',
+                severity: 2,
+                trackedAt: expect.any(Date)
+            },
+            {
+                symtrackId: expect.any(Number),
+                userId: 1,
+                symptomId: 1, 
+                trackDate: '2024-09-21',
+                timespan: '12-4 PM',
+                severity: 1,
+                trackedAt: expect.any(Date)
+            }
+        ]);
+    });
+    test('forbidden for non-matching user', async function(){
+        const resp = await request(app)
+            .get('/symptoms/users/1/tracking/date')
+            .send({
+                trackDate: '2024-09-21'
+            })
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .get('/symptoms/users/1/tracking/date')
+            .send({
+                trackDate: '2024-09-21'
+            })
+        expect(resp.statusCode).toEqual(401);
+    });
+    test('returns empty array if no tracking data', async function(){
+        const resp = await request(app)
+            .get('/symptoms/users/1/tracking/date')
+            .send({
+                trackDate: '2024-09-22'
+            })
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual([]);
+    });
 });
 
 /** PATCH /symptoms/users/:userId/tracking/:symtrackId */
-describe('PATCH /symptoms/users/:userId/tracking/:symtrackId', function(){
-    test('works for admin', async function(){});
-    test('works for matching user', async function(){});
-    test('forbidden for non-matching user', async function(){});
-    test('unauthorized for anonymous', async function(){});
-    test('bad request with missing data', async function(){});
-    test('bad request with invalid data', async function(){});
-    test('not found for invalid tracking record', async function(){});
-})
+describe('PATCH /symptoms/users/:userId/tracking/:symtrackId', async function(){
+    const symtrackId = await db.query(
+        `SELECT symtrack_id
+        FROM symptom_tracking
+        WHERE track_date = '2024-09-21 AND timespan = '12-8 AM'`
+    );
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .send({
+                severity: 5
+            })
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual({
+            trackingRecord: {
+                symtrackId: symtrackId,
+                userId: 1,
+                symptomId: 1,
+                trackDate: '2024-09-21',
+                timespan: '12-8 AM', 
+                severity: 5,
+                trackedAt: expect.any(Date)
+            }
+        });
+    });
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .send({
+                severity: 4
+            })
+            .set('authorization', u1Token);
+        expect(resp.body).toEqual({
+            trackingRecord: {
+                symtrackId: symtrackId,
+                userId: 1,
+                symptomId: 1,
+                trackDate: '2024-09-21',
+                timespan: '12-8 AM', 
+                severity: 4,
+                trackedAt: expect.any(Date)
+            }
+        });
+    });
+    test('forbidden for non-matching user', async function(){
+        const resp = await request(app)
+            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .send({
+                severity: 4
+            })
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .send({
+                severity: 4
+            })
+        expect(resp.statusCode).toEqual(401);
+    });
+    test('bad request with missing data', async function(){
+        const resp = await request(app)
+            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .send({})
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance requires property "severity"');
+    });
+    test('bad request with invalid data', async function(){
+        const resp = await request(app)
+            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .send({
+                severity: '2024-09-22'
+            })
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(400);
+        expect(resp.body.error.message).toContain('instance.severity');
+    });
+    test('not found for invalid tracking record', async function(){
+        const resp = await request(app)
+            .patch(`/symptoms/users/1/tracking/0`)
+            .send({
+                severity: 5
+            })
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toContain('No such tracking record exists');
+    });
+});
 
 /** DELETE /symptoms/users/:userId/tracking/:symtrackId */
-describe('DELETE /symptoms/users/:userId/tracking/:symtrackId', function(){
-    test('works for admin', async function(){});
-    test('works for matching user', async function(){});
-    test('forbidden for non-matching user', async function(){});
-    test('unauthorized for anonymous', async function(){});
-    test('not found for invalid tracking record', async function(){});
+describe('DELETE /symptoms/users/:userId/tracking/:symtrackId', async function(){
+    const symtrackId = await db.query(
+        `SELECT symtrack_id
+        FROM symptom_tracking
+        WHERE track_date = '2024-09-21 AND timespan = '12-8 AM'`
+    );
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .delete(`/symptoms/users/1/tracking/${symtrackId}`)
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual({deleted: symtrackId});
+    });
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .delete(`/symptoms/users/1/tracking/${symtrackId}`)
+            .set('authorization', u1Token);
+        expect(resp.body).toEqual({deleted: symtrackId});
+    });
+    test('forbidden for non-matching user', async function(){
+        const resp = await request(app)
+            .delete(`/symptoms/users/1/tracking/${symtrackId}`)
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .delete(`/symptoms/users/1/tracking/${symtrackId}`)
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(401);
+    });
+    test('not found for invalid tracking record', async function(){
+        const resp = await request(app)
+            .delete(`/symptoms/users/1/tracking/0`)
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toContain('No such tracking record exists');
+    });
 });
 
 /** DELETE /symptoms/users/:userId/tracking/date */
 describe('DELETE /symptoms/users/:userId/tracking/date', function(){
-    test('works for admin', async function(){});
-    test('works for matching user', async function(){});
-    test('forbidden for non-matching user', async function(){});
-    test('unauthorized for anonymous', async function(){});
-    test('not found for invalid tracking records', async function(){});
+    test('works for admin', async function(){
+        const resp = await request(app)
+            .delete(`/symptoms/users/1/tracking/date`)
+            .send({
+                trackDate: '2024-09-21'
+            })
+            .set('authorization', u2Token);
+        expect(resp.body).toEqual({deleted: '2024-09-21'});
+    });
+    test('works for matching user', async function(){
+        const resp = await request(app)
+            .delete(`/symptoms/users/1/tracking/date`)
+            .send({
+                trackDate: '2024-09-21'
+            })
+            .set('authorization', u1Token);
+        expect(resp.body).toEqual({deleted: '2024-09-21'});
+    });
+    test('forbidden for non-matching user', async function(){
+        const resp = await request(app)
+            .delete(`/symptoms/users/1/tracking/date`)
+            .send({
+                trackDate: '2024-09-21'
+            })
+            .set('authorization', u3Token);
+        expect(resp.statusCode).toEqual(403);
+    });
+    test('unauthorized for anonymous', async function(){
+        const resp = await request(app)
+            .delete(`/symptoms/users/1/tracking/date`)
+            .send({
+                trackDate: '2024-09-21'
+            })
+        expect(resp.statusCode).toEqual(401);
+    });
+    test('not found for invalid tracking records', async function(){
+        const resp = await request(app)
+            .delete(`/symptoms/users/1/tracking/date`)
+            .send({
+                trackDate: '2024-09-25'
+            })
+            .set('authorization', u2Token);
+        expect(resp.statusCode).toEqual(404);
+        expect(resp.body.error.message).toContain('No such tracking records exist');
+    });
 });
