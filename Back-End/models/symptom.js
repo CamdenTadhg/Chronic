@@ -170,7 +170,7 @@ class Symptom{
             WHERE user_id = $1 AND symptom_id = $2`,
             [userId, symptomId]
         );
-        const userSymptom = results.rows[0];
+        const userSymptom = result.rows[0];
         if (!userSymptom) throw new NotFoundError('No such userSymptom exists');
         return userSymptom;
     }
@@ -259,7 +259,7 @@ class Symptom{
             VALUES ($1, $2, $3, $4, $5)
             RETURNING   user_id AS 'userId',
                         symptom_id AS 'symptomId',
-                        trackDate AS 'trackDate',
+                        track_date AS 'trackDate',
                         timespan,
                         severity,
                         tracked_at AS 'trackedAt`,
@@ -408,7 +408,7 @@ class Symptom{
 
     /**DeleteDayTracking
      * inputs: userId, date
-     * outputs: none
+     * outputs: [{symtrackId}, ...]
      * NotFound error with invalid date
      */
 

@@ -5,26 +5,6 @@
 
 ## Write Back End (9/19-9/30)
     ## Medication Routes & Models 
-        - write model tests (9/26)
-            - COMMIT
-        - write models (9/26)
-            - Medication.create
-            - Medication.getAll
-            - Medication.getOne
-            - Medication.edit
-            - Medication.delete
-            - Medication.userConnect
-            - Medication.userGet
-            - Medication.userChange
-            - Medication.userDisconnect
-            - Medication.track
-            - Medication.getAllTracking
-            - Medication.getOneTracking
-            - Medication.getDayTracking
-            - Medication.editTracking
-            - Medication.deleteTracking
-            - Medication.deleteDayTracking
-            - COMMIT
         - write route tests (9/26)
             - COMMIT
         - write routes (9/27)
