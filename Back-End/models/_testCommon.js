@@ -100,13 +100,13 @@ async function commonBeforeAll() {
                                         time_of_day
         VALUES  (${u1Id}, ${m1Id}, 200, 'mg', '{"AM", "PM"}),
                 (${u1Id}, ${m2Id}, 150, 'mg', '{"AM"}'),
-                (${u1Id}, ${m3Id}, 1, 'pill', '{"AM", "Midday", "PM", "Evening"}')`);
+                (${u2Id}, ${m3Id}, 1, 'pill', '{"AM", "Midday", "PM", "Evening"}')`);
 
     await db.query(`
         INSERT INTO medication_tracking (user_id, med_id, track_date, time_of_day, number)
         VALUES  (${u1Id}, ${m1Id}, '2024-09-21', 'AM', 2),
                 (${u1Id}, ${m1Id}, '2024-09-21', 'PM', 1),
-                (${u1Id}, ${m3Id}, '2024-09-21', 'Midday', 1)`);
+                (${u2Id}, ${m3Id}, '2024-09-21', 'Midday', 1)`);
 };
 
 async function commonBeforeEach() {

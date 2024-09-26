@@ -4,23 +4,28 @@ process.env.NODE_ENV === "test";
 const {
     NotFoundError,
     BadRequestError,
-    UnauthorizedError
 } = require('../expressError');
 const db = require('../db.js');
-const Symptom = require("./user.js");
+const Symptom = require("./symptom.js");
 const {
     commonBeforeAll,
     commonBeforeEach,
     commonAfterEach,
     commonAfterAll
 } = require('./_testCommon.js');
-const { describe, default: test } = require('node:test');
 const { expect } = require('vitest');
-const { fail } = require('assert');
-const { L } = require('vitest/dist/chunks/reporters.C_zwCd4j.js');
 
+
+let s1, u1, s3, s2, u2;
 beforeAll(commonBeforeAll);
-beforeEach(commonBeforeEach);
+beforeEach(async () => {
+    commonBeforeEach();
+    s1 = await db.query(`SELECT symptom_id FROM symptoms WHERE symptom = 'S1'`);
+    u1 = await db.query(`SELECT user_id FROM users WHERE email = 'u1@test.com'`);
+    s3 = await db.query(`SELECT symptom_id FROM symptoms WHERE symptom = 'S3'`);
+    s2 = await db.query(`SELECT symptom_id FROM symptoms WHERE symptom = 'S2'`);
+    u2 = await db.query(`SELECT user_id FROM users WHERE email = 'u2@test.com'`);
+});
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
@@ -54,17 +59,30 @@ describe('Symptom.getAll', function(){});
     test('works', async function(){
         const symptoms = await Symptom.getAll();
         expect(symptoms).toEqual([
-            {symptom: 'S1'},
-            {symptom: 'S2'},
-            {symptom: 'S3'}
+            {
+                symptomId: expect.any(Number),
+                symptom: 'S1'
+            },
+            {
+                symptomId: expect.any(Number),
+                symptom: 'S2'
+            },
+            {
+                symptomId: expect.any(Number),
+                symptom: 'S3'
+            }
         ]);
     });
 
 /**Symptom.getOne */
-describe('Symptom.getOne', function(){});
+describe('Symptom.getOne', async function(){
     test('works for valid symptom', async function(){
-        const symptom = await Symptom.getOne(1);
-        expect(symptom).toEqual({symptom: 'S1'});
+        const symptom = await Symptom.getOne(s1);
+        expect(symptom).toEqual(
+            {
+                symptomId: expect.any(Number),
+                symptom: 'S1'
+            });
     });
     test('Notfound error for invalid symptom', async function(){
         try{
@@ -73,16 +91,22 @@ describe('Symptom.getOne', function(){});
             expect(err instanceof NotFoundError).toBeTruthy();
         }
     });
+});
+
 
 /**Symptom.edit */
-describe('Symptom.edit', function(){
+describe('Symptom.edit', async function(){
     test('works for valid symptom', async function(){
-        const symptom = await Symptom.edit(1, {symptom: 'D1 disorder'});
-        expect(symptom).toEqual({symptom: 'D1 disorder'});
+        const symptom = await Symptom.edit(s1, {symptom: 'S1 pain'});
+        expect(symptom).toEqual(
+            {
+                symptomId: s1,
+                symptom: 'S1 pain'
+            });
     });
     test('Notfound error for invalid symptom', async function(){
         try {
-            await Symptom.edit(0, {symptom: 'D0 Disorder'});
+            await Symptom.edit(0, {symptom: 'S0 pain'});
             fail();
         } catch(err) {
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -90,7 +114,7 @@ describe('Symptom.edit', function(){
     });
     test('Bad Request with duplicate symptom', async function(){
         try{
-            await Symptom.edit(2, {symptom: 'D3'});
+            await Symptom.edit(s1, {symptom: 'S3'});
             fail();
         } catch(err) {
             expect(err instanceof BadRequestError).toBeTruthy();
@@ -99,9 +123,9 @@ describe('Symptom.edit', function(){
 });
 
 /**Symptom.delete */
-describe('Symptom.delete', function(){
+describe('Symptom.delete', async function(){
     test('works for valid symptom', async function(){
-        const symptom = await Symptom.delete(1);
+        const symptom = await Symptom.delete(s1);
         const notFound = await db.query(`SELECT * FROM symptoms WHERE symptom = 'S1'`);
         expect(notFound.rows.length).toEqual(0);
     });
@@ -116,19 +140,19 @@ describe('Symptom.delete', function(){
 });
 
 /**Symptom.userConnect */
-describe('Symptom.userConnect', function(){
+describe('Symptom.userConnect', async function(){
     test('works for valid user & symptom', async function(){
-        const userSymptom = await Symptom.userConnect(1, 3);
+        const userSymptom = await Symptom.userConnect(u1, s3);
         expect(userSymptom).toEqual({
-            userId: 1,
-            symptomId: 3
+            userId: u1,
+            symptomId: s3
         });
-        const found = await db.query(`SELECT * FROM users_symptoms WHERE user_id = 1 AND diagnosis_id = 3`);
+        const found = await db.query(`SELECT * FROM users_symptoms WHERE user_id = $1 AND symptom_id = $2`, [u1, s3]);
         expect(found.rows.length).toEqual(1);
     });
     test('NotFound error with invalid user', async function(){
         try{
-            Symptom.userConnect(1, 0);
+            Symptom.userConnect(0, s1);
             fail();
         } catch(err){
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -136,7 +160,7 @@ describe('Symptom.userConnect', function(){
     });
     test('NotFound error with invalid symptom', async function(){
         try{
-            Symptom.userConnect(0, 1);
+            Symptom.userConnect(u1, 0);
             fail();
         } catch(err){
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -144,7 +168,7 @@ describe('Symptom.userConnect', function(){
     });
     test('BadRequest error with existing userSymptom', async function(){
         try{
-            Symptom.userConnect(1, 1);
+            Symptom.userConnect(u1, s1);
             fail();
         } catch(err){
             expect(err instanceof BadRequestError).toBeTruthy();
@@ -155,10 +179,10 @@ describe('Symptom.userConnect', function(){
 /**Symptom.userGet */
 describe('Symptom.userGet', function(){
     test('works with valid connection', async function(){
-        const userSymptom = await Symptom.userGet(1, 1);
+        const userSymptom = await Symptom.userGet(u1, s1);
         expect(userSymptom).toEqual({
-            userId: 1,
-            symptomId: 1,
+            userId: u1,
+            symptomId: s1,
         });
     });
     test('NotFound with invalid symptom', async function(){
@@ -179,7 +203,7 @@ describe('Symptom.userGet', function(){
     });
     test('NotFound with invalid userSymptom', async function(){
         try {
-            await Symptom.userGet(1, 3);
+            await Symptom.userGet(u1, s3);
             fail();
         } catch(err) {
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -188,17 +212,18 @@ describe('Symptom.userGet', function(){
 })
 
 /**Symptom.userChange */
-describe('Symptom.userChange', function(){
+describe('Symptom.userChange', async function(){
     test('works for valid user & symptom', async function(){
-        const userSymptom = await Symptom.userChange(1, 1, {symptomId: 3});
+        const userSymptom = await Symptom.userChange(u1, s1, {symptomId: s3});
         expect(userSymptom).toEqual({
-            userId: 1,
-            symptomId: 2
+            userId: u1,
+            symptomId: s3
         });
     });
     test('NotFound error with invalid userSymptom', async function(){
         try{
-            Symptom.userChange(0, 1, {symptomId: 2});
+
+            Symptom.userChange(0, s1, {symptomId: s2});
             fail();
         } catch(err){
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -206,7 +231,7 @@ describe('Symptom.userChange', function(){
     });
     test('BadRequest error with existing userSymptom', async function(){
         try{
-            Symptom.userChange(1, 1, {symptomId: 2});
+            Symptom.userChange(u1, s1, {symptomId: s2});
             fail();
         } catch(err){
             expect(err instanceof BadRequestError).toBeTruthy();
@@ -215,15 +240,15 @@ describe('Symptom.userChange', function(){
 });
 
 /**Symptom.userDisconnect */
-describe('Symptom.userDisconnect', function(){
+describe('Symptom.userDisconnect', async function(){
     test('works for valid user & symptom', async function(){
-        await Symptom.userDisconnect(1, 1);
-        const notfound = await db.query(`SELECT * FROM users_symptoms WHERE user_id = 1 AND diagnosis_id = 1`);
+        await Symptom.userDisconnect(u1, s1);
+        const notfound = await db.query(`SELECT * FROM users_symptoms WHERE user_id = $1 AND symptom_id = $2`, [u1, s1]);
         expect(notfound.rows.length).toEqual(0);
     });
     test('NotFound error with invalid userSymptom', async function(){
         try{
-            Symptom.userDisconnect(1, 3);
+            Symptom.userDisconnect(u1, s3);
             fail();
         } catch(err){
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -232,19 +257,19 @@ describe('Symptom.userDisconnect', function(){
 });
 
 /**Symptom.track */
-describe('Symptom.track', function(){
+describe('Symptom.track', async function(){
     test('works with valid user & symptom', async function(){
         const symptomTracking = Symptom.track({
-            userId: 1,
-            symptomId: 1,
+            userId: u1,
+            symptomId: s1,
             trackDate: '2024-09-23',
             timespan: '8 AM-12 PM',
             severity: 3
         });
         expect(symptomTracking).toEqual({
-            symtrack_id: expect.any(Number),
-            userId: 1,
-            symptomId: 1,
+            medtrackId: expect.any(Number),
+            userId: u1,
+            symptomId: s1,
             trackDate: '2024-09-23', 
             timespan: '8 AM-12 PM',
             severity: 3,
@@ -253,14 +278,14 @@ describe('Symptom.track', function(){
         const currentTime = new Date();
         const timeDifference = Math.abs(currentTime - symptomTracking.trackedAt);
         expect(timeDifference).toBeLessThan(5000);
-        const found = await db.query(`SELECT * FROM symptom_tracking WHERE user_id = 1 AND symptom_id = 1 AND date = '2024-09-23' AND timespan = '8 AM-12 PM'`);
+        const found = await db.query(`SELECT * FROM symptom_tracking WHERE user_id = $1 AND symptom_id = $2 AND date = '2024-09-23' AND timespan = '8 AM-12 PM'`, [u1, s1]);
         expect(found.rows.length).toEqual(1);
     });
     test('NotFound error with invalid userSymptom', async function(){
         try{
             Symptom.track({
-                userId: 1,
-                symptomId: 3,
+                userId: u1,
+                symptomId: s3,
                 trackDate: '2024-09-23', 
                 timespan: '12-8 AM',
                 severity: 1
@@ -273,8 +298,8 @@ describe('Symptom.track', function(){
     test('Bad request error with existing tracking record', async function(){
         try{
             Symptom.track({
-                userId: 1,
-                symptomId: 1,
+                userId: u1,
+                symptomId: s1,
                 trackDate: '2024-09-21', 
                 timespan: '12-8 AM',
                 severity: 1
@@ -287,14 +312,14 @@ describe('Symptom.track', function(){
 });
 
 /**Symptom.getAllTracking */
-describe('Symptom.getAllTracking', function(){
+describe('Symptom.getAllTracking', async function(){
     test('works with valid user & symptom', async function(){
-        const userRecords = await Symptom.getAllTracking(1);
+        const userRecords = await Symptom.getAllTracking(u1);
         expect(userRecords).toEqual([
             {
                 symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
+                userId: expect.any(Number),
+                symptomId: expect.any(Number), 
                 trackDate: '2024-09-21',
                 timespan: '12-8 AM', 
                 severity: 3,
@@ -302,8 +327,8 @@ describe('Symptom.getAllTracking', function(){
             },
             {
                 symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
+                userId: expect.any(Number),
+                symptomId: expect.any(Number), 
                 trackDate: '2024-09-21',
                 timespan: '8 AM-12 PM', 
                 severity: 2,
@@ -311,8 +336,8 @@ describe('Symptom.getAllTracking', function(){
             },
             {
                 symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
+                userId: expect.any(Number),
+                symptomId: expect.any(Number), 
                 trackDate: '2024-09-21',
                 timespan: '12-4 PM', 
                 severity: 1,
@@ -321,7 +346,7 @@ describe('Symptom.getAllTracking', function(){
         ])
     });
     test('Returns empty array if no tracking information', async function(){
-        const userRecords = await Symptom.getAllTracking(2);
+        const userRecords = await Symptom.getAllTracking(u2);
         expect(userRecords).toEqual([])
     })
     test('NotFound error with invalid user', async function(){
@@ -341,8 +366,8 @@ describe('Symptom.getOneTracking', function(){
         const trackingRecord = await Symptom.getOneTracking(symtrackId);
         expect(trackingRecord).toEqual({
             symtrackId: symtrackId,
-            userId: 1,
-            symptomId: 1,
+            userId: u1,
+            symptomId: s1,
             trackDate: '2024-09-21', 
             timespan: '12-4 PM',
             severity: 1,
@@ -362,12 +387,12 @@ describe('Symptom.getOneTracking', function(){
 /**Symptom.getDayTracking */
 describe('Symptom.getDayTracking', function(){
     test('works with valid date', async function(){
-        const dayTrackingRecords = await Symptom.getDayTracking(1, '2024-09-21');
+        const dayTrackingRecords = await Symptom.getDayTracking(u1, '2024-09-21');
         expect(dayTrackingRecords).toEqual([
             {
                 symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
+                userId: u1,
+                symptomId: s1, 
                 trackDate: '2024-09-21',
                 timespan: '12-8 AM', 
                 severity: 3,
@@ -375,8 +400,8 @@ describe('Symptom.getDayTracking', function(){
             },
             {
                 symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
+                userId: u1,
+                symptomId: s1, 
                 trackDate: '2024-09-21',
                 timespan: '8 AM-12 PM', 
                 severity: 2,
@@ -384,8 +409,8 @@ describe('Symptom.getDayTracking', function(){
             },
             {
                 symtrackId: expect.any(Number),
-                userId: 1,
-                symptomId: 1, 
+                userId: u1,
+                symptomId: s1, 
                 trackDate: '2024-09-21',
                 timespan: '12-4 PM', 
                 severity: 1,
@@ -402,7 +427,7 @@ describe('Symptom.getDayTracking', function(){
         }
     });
     test('Returns empty array for day with no tracking', async function(){
-        const dayTrackingRecords = await Symptom.getDayTracking(1, '2024-09-22');
+        const dayTrackingRecords = await Symptom.getDayTracking(u1, '2024-09-22');
         expect(dayTrackingRecords).toEqual([]); 
     });
 });
@@ -410,11 +435,11 @@ describe('Symptom.getDayTracking', function(){
 /**Symptom.editTracking */
 describe('Symptom.editTracking', function(){
     test('works with valid tracking record', async function(){
-        const symtrackRecord = await Symptom.editTracking(1, 1, '2024-09-21', '12-8 AM', {severity: 5});
+        const symtrackRecord = await Symptom.editTracking(u1, s1, '2024-09-21', '12-8 AM', {severity: 5});
         expect(symtrackRecord).toEqual({
-            symtrack_id: expect.any(Number),
-            userId: 1,
-            symptomId: 1, 
+            symtrackId: expect.any(Number),
+            userId: u1,
+            symptomId: s1, 
             trackDate: '2024-09-21', 
             timespan: '12-8 AM',
             severity: 5,
@@ -426,7 +451,7 @@ describe('Symptom.editTracking', function(){
     });
     test('NotFound error with invalid tracking record', async function(){
         try{
-            await Symptom.editTracking(1, 1, '2024-09-22', '12-8 AM', {severity: 3});
+            await Symptom.editTracking(u1, s1, '2024-09-22', '12-8 AM', {severity: 3});
             fail();
         } catch(err){
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -437,13 +462,13 @@ describe('Symptom.editTracking', function(){
 /**Symptom.deleteTracking */
 describe('Symptom.deleteTracking', function(){
     test('works with valid tracking record', async function(){
-        await Symptom.deleteTracking(1, 1, '2024-09-21', '12-8 AM');
-        const notfound = await db.query(`SELECT * FROM symptom_tracking WHERE user_id = 1 AND symptom_id = 1 AND date = '2024-09-21' AND timespan = '12-8 AM'`);
+        await Symptom.deleteTracking(u1, s1, '2024-09-21', '12-8 AM');
+        const notfound = await db.query(`SELECT * FROM symptom_tracking WHERE user_id = $1 AND symptom_id = $2 AND date = '2024-09-21' AND timespan = '12-8 AM'`, [u1, s1]);
         expect(notfound.rows.length).toEqual(0);
     });
     test('NotFound error with invalid tracking record', async function(){
         try {
-            await Symptom.deleteTracking(1, 1, '2024-09-21', '4-8 PM');
+            await Symptom.deleteTracking(u1, s1, '2024-09-21', '4-8 PM');
             fail();
         } catch(err) {
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -454,13 +479,13 @@ describe('Symptom.deleteTracking', function(){
 /**Symptom.deleteDayTracking */
 describe('Symptom.deleteDayTracking', function(){
     test('works with valid date', async function(){
-        await Symptom.deleteDayTracking(1, 1, '2024-09-21');
-        const notfound = await db.query(`SELECT * FROM symptom_tracking WHERE user_id = 1 AND symptom_id = 1 AND date = '2024-09-21'`);
+        await Symptom.deleteDayTracking(u1, '2024-09-21');
+        const notfound = await db.query(`SELECT * FROM symptom_tracking WHERE user_id = $1 AND date = '2024-09-21'`, [u1]);
         expect(notfound.rows.length).toEqual(0);
     });
     test('NotFound error with invalid date', async function(){
         try {
-            await Symptom.deleteDayTracking(1, 1, '2024-09-23');
+            await Symptom.deleteDayTracking(u1, s1, '2024-09-23');
             fail();
         } catch(err) {
             expect(err instanceof NotFoundError).toBeTruthy();

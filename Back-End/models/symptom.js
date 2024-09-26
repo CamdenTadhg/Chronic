@@ -40,7 +40,7 @@ class Symptom{
 
     static async getAll(){
         const result = await db.query(
-            `SELECT symptom_id AS 'symptomId,
+            `SELECT symptom_id AS 'symptomId',
                     symptom
             FROM symptoms
             ORDER BY symptom`
@@ -56,7 +56,7 @@ class Symptom{
 
     static async getOne(symptomId) {
         const result = await db.query(
-            `SELECT symptom_id AS 'symptomId,
+            `SELECT symptom_id AS 'symptomId',
                     symptom
             FROM symptoms
             WHERE symptom_id = $1`,
@@ -88,7 +88,7 @@ class Symptom{
             `UPDATE symptoms
             SET symptom = $1
             WHERE symptom_id = $2
-            RETURNING   symptom_id AS 'symptomId'
+            RETURNING   symptom_id AS 'symptomId',
                         symptom`,
             [data.symptom, symptomId]);
         const symptom = result.rows[0];
@@ -108,7 +108,7 @@ class Symptom{
             `DELETE
             FROM symptoms
             WHERE symptom_id = $1
-            RETURNING symptom_id`,
+            RETURNING symptom_id AS 'symptomId'`,
             [symptomId]);
         const symptom = result.rows[0]
         if (!symptom) throw new NotFoundError('No such symptom exists');

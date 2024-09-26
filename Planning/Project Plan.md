@@ -3,37 +3,37 @@
 ## Design Database Schema (9/15)
 ## Plan API Use (9/15)
 
-## Write Back End (9/19-9/29)
-    ## Symptom Routes & Models
-        - write routes (9/26)
-            - update symptom tracking record
-            - delete symptom tracking record
-            - delete symptom tracking records for a single day
-            - COMMIT
+## Write Back End (9/19-9/30)
     ## Medication Routes & Models 
         - write model tests (9/26)
             - COMMIT
         - write models (9/26)
-            - create medication 
-            - get list of all medications
-            - get individual medication
-            - update medication
-            - delete medication
-            - connect user and medication
-            - change user/medication connection
-            - delete user/medication connection
-            - create medication tracking record
-            - get list of all medication tracking records for one user
-            - get individual medication tracking record
-            - get all medication tracking records for a single day
-            - update medication tracking record
-            - delete medication tracking record
-            - delete medication tracking records for a single day
+            - Medication.create
+            - Medication.getAll
+            - Medication.getOne
+            - Medication.edit
+            - Medication.delete
+            - Medication.userConnect
+            - Medication.userGet
+            - Medication.userChange
+            - Medication.userDisconnect
+            - Medication.track
+            - Medication.getAllTracking
+            - Medication.getOneTracking
+            - Medication.getDayTracking
+            - Medication.editTracking
+            - Medication.deleteTracking
+            - Medication.deleteDayTracking
             - COMMIT
         - write route tests (9/26)
             - COMMIT
         - write routes (9/27)
             - new medication schema
+            - update medication schema
+            - new userMedication schema
+            - change userMedication schema
+            - new medication tracking schema
+            - update mediation tracking schema
             - create/select medication and connect it to a user
             - get list of all medications
             - get individual medication
@@ -72,7 +72,7 @@
         - spot test with Insomnia
         - COMMIT
 
-## Write Front End
+## Write Front End (10/1-10/15)
     ## Set Up React Site
     ## Plan Out Components
     ## Home Page
@@ -83,7 +83,7 @@
     ## Data Page
     ## About Page
 
-## Style Site
+## Style Site (10/15-10/25)
     ## Home Page
     ## Signed In Home Page
     ## The Lastest Page
@@ -92,7 +92,7 @@
     ## Data Page
     ## About Page
 
-## Documentation & Deployment
+## Documentation & Deployment (10/25-10/31)
     ## Add comments
     ## Write ReadMe
     ## Write About Page
@@ -109,6 +109,7 @@
         - 100 medications
         - 15 users
         - one month of tracking data for each user
+    ## Add analytics
     ## Track Bowel Movements
     ## Track Menstrual Cycle
     ## Track Doctor Visits
