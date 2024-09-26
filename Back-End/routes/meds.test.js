@@ -4,7 +4,7 @@ process.env.NODE_ENV === "test";
 const request = require("supertest");
 const db = require('../db.js');
 const app = require('../app');
-const Symptom = require('../models/symptom');
+const Medication = require('../models/medication');
 
 const {
     commonBeforeAll,
@@ -21,652 +21,643 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
-/** POST /symptoms/ */
-describe('POST /symptoms/', function(){
-    test('works for admin to create a symptom', async function(){
+/** POST /meds/ */
+describe('POST /meds/', function(){
+    test('works for admin to create a medication', async function(){
         const resp = await request(app)
-            .post('/symptoms/')
+            .post('/meds/')
             .send({
-                symptom: 'S4',
+                medication: 'M4',
             })
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
-            symptom: {
-                symptomId: expect.any(Number),
-                symptom: 'S4',
+            medication: {
+                medId: expect.any(Number),
+                medication: 'M4',
             }
         });
     });
     test('forbidden for user', async function(){
         const resp = await request(app)
-            .post('/symptoms/')
+            .post('/meds/')
             .send({
-                symptom: 'S4',
+                medication: 'M4',
             })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .post('/symptoms/')
+            .post('/meds/')
             .send({
-                symptom: 'S4',
+                medication: 'M4',
             })
         expect(resp.statusCode).toEqual(401);
     });
     test('bad request with missing data', async function(){
         const resp = await request(app)
-            .post('/symptoms/')
+            .post('/meds/')
             .send({})
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance requires property "symptom"');
+        expect(resp.body.error.message).toContain('instance requires property "medication"');
     });
     test('bad request with invalid data', async function(){
         const resp = await request(app)
-            .post('/symptoms/')
+            .post('/meds/')
             .send({
-                symptom: 1
+                medication: 1
             })
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance.symptom');
+        expect(resp.body.error.message).toContain('instance.medication');
     });
-    test('bad request with duplicate symptom', async function(){
+    test('bad request with duplicate medication', async function(){
         const resp = await request(app)
-            .post('/symptoms/')
+            .post('/meds/')
             .send({
-                symptom: 'S1'
+                medication: 'M1'
             })
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('S1 already exists');
+        expect(resp.body.error.message).toContain('M1 already exists');
     });
 });
 
-/** GET /symptoms */
-describe('GET /symptoms/', function(){
-    test('works for admin to get symptom list', async function(){
+/** GET /meds */
+describe('GET /meds/', function(){
+    test('works for admin to get medication list', async function(){
         const resp = await request(app)
-            .get('/symptoms/')
+            .get('/meds/')
             .set('authorization', u2Token);
         expect(resp.body).toEqual({
-            symptoms: [
+            medications: [
                 {
-                    symptomId: 1,
-                    symptom: 'S1',
+                    medId: 1,
+                    medication: 'M1',
                 },
                 {
-                    symptomId: 2,
-                    symptom: 'S2',
+                    medId: 2,
+                    medication: 'M2',
                 },
                 {
-                    symptomId: 3,
-                    symptom: 'S3',
+                    medId: 3,
+                    medication: 'M3',
                 }
             ]
         });
     });
-    test('works for user to get symptom list', async function(){
+    test('works for user to get medication list', async function(){
         const resp = await request(app)
-            .get('/symptoms/')
+            .get('/meds/')
             .set('authorization', u1Token);
         expect(resp.body).toEqual({
-            symptoms: [
+            medications: [
                 {
-                    symptomId: 1,
-                    symptom: 'S1',
+                    medId: 1,
+                    medication: 'M1',
                 },
                 {
-                    symptomId: 2,
-                    symptom: 'S2',
+                    medId: 2,
+                    medication: 'M2',
                 },
                 {
-                    symptomId: 3,
-                    symptom: 'S3',
+                    medId: 3,
+                    medication: 'M3',
                 }
             ]
         });
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .get('/symptoms/');
+            .get('/meds/');
         expect(resp.statusCode).toEqual(401);
     });
     test('fails: test next() handler', async function(){
         //does this route work with the error handler?
-        await db.query('DROP TABLE symptoms CASCADE');
+        await db.query('DROP TABLE medications CASCADE');
         const resp = await request(app)
-            .get('/symptoms/')
+            .get('/medications/')
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(500);
     });
 });
 
-/** GET symptoms/:symptomId */
-describe('GET /symptoms/:symptomId', function(){
-    test('works for admin to get symptom record', async function(){
+/** GET meds/:medId */
+describe('GET /meds/:medId', function(){
+    test('works for admin to get medication record', async function(){
         const resp = await request(app)
-            .get('/symptoms/1')
+            .get('/meds/1')
             .set('authorization', u2Token);
         expect(resp.body).toEqual({
-            symptom: {
-                symptomId: 1,
-                symptom: 'S1',
+            medication: {
+                medId: 1,
+                medication: 'M1',
             }
         });
     });
     test('forbidden for users', async function(){
         const resp = await request(app)
-            .get('/symptoms/1')
+            .get('/meds/1')
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .get('/symptoms/1')
+            .get('/meds/1')
         expect(resp.statusCode).toEqual(401);
     });
-    test('not found for invalid symptom', async function(){
+    test('not found for invalid medication', async function(){
         const resp = await request(app)
-            .get('/symptoms/0')
+            .get('/meds/0')
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(404);
-        expect(resp.body.error.message).toContain('No such symptom exists');
+        expect(resp.body.error.message).toContain('No such medication exists');
     });
 });
 
-/** PATCH symptoms/:symptomId */
-describe('PATCH /symptoms/:symptomId', function(){
+/** PATCH meds/:medId */
+describe('PATCH /meds/:medId', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .patch('/symptoms/1')
+            .patch('/meds/1')
             .send({
-                symptom: 'naseau'
+                medication: 'propanalol'
             })
             .set('authorization', u2Token);
         expect(resp.body).toEqual({
-            symptom: {
-                symptomId: 1,
-                symptom: 'naseau'
+            medication: {
+                medId: 1,
+                medication: 'propanalol'
             }
         });
     });
     test('forbidden for users', async function(){
         const resp = await request(app)
-            .patch('/symptoms/1')
+            .patch('/meds/1')
             .send({
-                symptom: 'naseau'
+                medication: 'propanalol'
             })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .patch('/symptoms/1')
+            .patch('/meds/1')
             .send({
-                symptom: 'naseau'
+                medication: 'propanalol'
             })
         expect(resp.statusCode).toEqual(401);
     });
     test('bad request with invalid data', async function(){
         const resp = await request(app)
-            .patch('/symptoms/1')
+            .patch('/medications/1')
             .send({
-                symptom: 1
+                medication: 1
             })
             .set('authorization', u2Token)
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance.symptom');
+        expect(resp.body.error.message).toContain('instance.medication');
     });
-    test('not found for invalid symptom', async function(){
+    test('not found for invalid medication', async function(){
         const resp = await request(app)
-            .patch('/symptoms/0')
+            .patch('/meds/0')
             .send({
-                symptom: 'naseau'
+                medication: 'propanalol'
             })
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(404);
-        expect(resp.body.error.message).toContain('No such symptom exists');
+        expect(resp.body.error.message).toContain('No such medication exists');
     });
 });
 
-/** DELETE symptoms/:symptomId */
-describe('DELETE /symptoms/:symptomId', function(){
+/** DELETE meds/:medId */
+describe('DELETE /meds/:medId', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .delete('/symptoms/1')
+            .delete('/meds/1')
             .set('authorization', u2Token);
         expect(resp.body).toEqual({deleted: 1});
     });
     test('forbidden for users', async function(){
         const resp = await request(app)
-            .delete('/symptoms/1')
+            .delete('/meds/1')
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .delete('/symptoms/1')
+            .delete('/meds/1')
         expect(resp.statusCode).toEqual(401);
     });
-    test('not found for invalid symptom', async function(){
+    test('not found for invalid medication', async function(){
         const resp = await request(app)
-            .delete('/symptoms/0')
+            .delete('/meds/0')
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(404);
     });
 });
 
 
-/** POST /symptoms/:symptomId/users/:userId 
- * use a 0 for the symptomId when creating a new symptom
+/** POST /meds/:medId/users/:userId 
+ * use a 0 for the medId when creating a new medication
 */
-describe('POST /symptoms/:symptomId/users/:userId', function(){
+describe('POST /meds/:medId/users/:userId', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .post('/symptoms/2/users/1/')
+            .post('/meds/2/users/1/')
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
-            userSymptom: {
+            userMedication: {
                 userId: 1,
-                symptomId: 2
+                medId: 2
             }
         });
     });
-    test('works for matching user with existing symptom', async function(){
+    test('works for matching user with existing medication', async function(){
         const resp = await request(app)
-            .post('/symptoms/2/users/1/')
+            .post('/meds/2/users/1/')
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
-            userSymptom: {
+            userMedication: {
                 userId: 1,
-                symptomId: 2
+                medId: 2
             }
         });
     });
-    test('works for matching user with new symptom', async function(){
+    test('works for matching user with new medication', async function(){
         const resp = await request(app)
-            .post('/symptoms/0/users/1/')
+            .post('/meds/0/users/1/')
             .send({
-                symptom: 'lethargy'
+                medication: 'lethargy'
             })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
-            userSymptom: {
+            userMedication: {
                 userId: 1,
-                symptomId: expect.any(Number)
+                medId: expect.any(Number)
             }
         });
         const found = await request(app)
-            .get(`/symptoms/${resp.body.userSymptom.symptomId}`)
+            .get(`/meds/${resp.body.userMedication.medId}`)
             .set('authorization', u2Token)
         expect(found).toBeTruthy();
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .post('/symptoms/2/users/1/')
+            .post('/meds/2/users/1/')
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .post('/symptoms/0/users/1/')
+            .post('/meds/0/users/1/')
             .send({
-                symptom: 'lethargy'
+                medication: 'lethargy'
             })
         expect(resp.statusCode).toEqual(401);
     });
     test('bad request with missing data', async function(){
         const resp = await request(app)
-            .post('/symptoms/0/users/1/')
+            .post('/meds/0/users/1/')
             .send({})
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance requires property "symptom"');
+        expect(resp.body.error.message).toContain('instance requires property "medication"');
     });
     test('bad request with invalid data', async function(){
         const resp = await request(app)
-            .post('/symptoms/0/users/1/')
+            .post('/meds/0/users/1/')
             .send({
-                symptom: 1
+                medication: 1
             })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance.symptom');
+        expect(resp.body.error.message).toContain('instance.medication');
     });
     test('bad request with duplicate connection', async function(){
         const resp = await request(app)
-            .post('/symptoms/1/users/1/')
+            .post('/meds/1/users/1/')
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('This symptom has already been assigned');
+        expect(resp.body.error.message).toContain('This medication has already been assigned');
     });
-    test('not found for invalid symptom', async function(){
+    test('not found for invalid medication', async function(){
         const resp = await request(app)
-            .post('/symptoms/25/users/1/')
+            .post('/meds/25/users/1/')
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(404);
-        expect(resp.body.error.message).toContain('No such symptom exists');
+        expect(resp.body.error.message).toContain('No such medication exists');
     });
     test('not found for invalid user', async function(){
         const resp = await request(app)
-            .post('/symptoms/1/users/0/')
+            .post('/meds/1/users/0/')
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(404);
         expect(resp.body.error.message).toContain('No such user exists');
     });
 });
 
-/**GET /symptoms/:symptomId/users/:userId */
-describe('GET /symptoms/:symptomId/users/:userId', function(){
+/**GET /meds/:medId/users/:userId */
+describe('GET /meds/:medId/users/:userId', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .get('/symptoms/1/users/1/')
+            .get('/meds/1/users/1/')
             .set('authorization', u2Token);
         expect(resp.body).toEqual({
-            userSymptom: {
+            userMedication: {
                 userId: 1,
-                symptomId: 1
+                medId: 1
             }
         });
     });
     test('works for matching user', async function(){
         const resp = await request(app)
-            .get('/symptoms/1/users/1/')
+            .get('/meds/1/users/1/')
             .set('authorization', u1Token);
         expect(resp.body).toEqual({
-            userSymptom: {
+            userMedication: {
                 userId: 1,
-                symptomId: 1
+                medId: 1
             }
         });
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .get('/symptoms/1/users/1/')
+            .get('/meds/1/users/1/')
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .get('/symptoms/1/users/1/')
+            .get('/meds/1/users/1/')
         expect(resp.statusCode).toEqual(401);
     });
-    test('not found for invalid userSymptom', async function(){
+    test('not found for invalid userMedication', async function(){
         const resp = await request(app)
-            .get('/symptoms/1/users/3/')
+            .get('/meds/1/users/3/')
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(404);
-        expect(resp.body.error.message).toContain('No such userSymptom exists');
+        expect(resp.body.error.message).toContain('No such userMedication exists');
     });
 });
 
-/** PATCH /symptoms/:symptomId/users/:userId */
-describe('PATCH /symptoms/:symptomId/users/:userId', function(){
+/** PATCH /meds/:medId/users/:userId */
+describe('PATCH /meds/:medId/users/:userId', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .patch('/symptoms/1/users/1')
+            .patch('/meds/1/users/1')
             .send({
-                symptomId: 2
+                medId: 2
             })
             .set('authorization', u2Token);
         expect(resp.body).toEqual({
-            userSymptom: {
+            userMedication: {
                 userId: 1,
-                symptomId: 2
+                medId: 2
             }
         });
     });
     test('works for matching user', async function(){
         const resp = await request(app)
-            .patch('/symptoms/1/users/1')
+            .patch('/meds/1/users/1')
             .send({
-                symptomId: 3
+                medId: 3
             })
             .set('authorization', u1Token);
         expect(resp.body).toEqual({
-            userSymptom: {
+            userMedication: {
                 userId: 1,
-                symptomId: 2
+                medId: 2
             }
         });
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .patch('/symptoms/1/users/1')
+            .patch('/meds/1/users/1')
             .send({
-                symptomId: 3
+                medId: 3
             })
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .patch('/symptoms/1/users/1')
+            .patch('/meds/1/users/1')
             .send({
-                symptomId: 3
+                medId: 3
             })
         expect(resp.statusCode).toEqual(401);
     });
     test('bad request with missing data', async function(){
         const resp = await request(app)
-            .patch('/symptoms/2/users/2')
+            .patch('/meds/2/users/2')
             .send({})
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance requires property "symptomId"');
+        expect(resp.body.error.message).toContain('instance requires property "medId"');
     });
     test('bad request with invalid data', async function(){
         const resp = await request(app)
-            .patch('/symptoms/2/users/2')
+            .patch('/meds/2/users/2')
             .send({
-                symptomId: 'lethargy'
+                medId: 'lethargy'
             })
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance.symptomId');
+        expect(resp.body.error.message).toContain('instance.medId');
     });
-    test('not found for invalid userSymptom', async function(){
+    test('not found for invalid userMedication', async function(){
         const resp = await request(app)
-            .patch('/symptoms/1/users/3')
+            .patch('/meds/1/users/3')
             .send({
-                symptomId: 2
+                medId: 2
             })
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(404);
-        expect(resp.body.error.message).toContain('No such userSymptom exists');
+        expect(resp.body.error.message).toContain('No such userMedication exists');
     });
 });
 
-/**DELETE /symptoms/:symptomId/users/:userId */
-describe('DELETE /symptoms/:symptomId/users/:userId', function(){
+/**DELETE /meds/:medId/users/:userId */
+describe('DELETE /meds/:medId/users/:userId', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .delete('/symptoms/1/users/1')
+            .delete('/meds/1/users/1')
             .set('authorization', u2Token);
-        expect(resp.body).toEqual({deleted: [`User 1`, `Symptom 1`]});
+        expect(resp.body).toEqual({deleted: [`User 1`, `Medication 1`]});
     });
     test('works for matching user', async function(){
         const resp = await request(app)
-            .delete('/symptoms/1/users/1')
+            .delete('/meds/1/users/1')
             .set('authorization', u1Token);
-        expect(resp.body).toEqual({deleted: [`User 1`, `Symptom 1`]});
+        expect(resp.body).toEqual({deleted: [`User 1`, `Medication 1`]});
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .delete('/symptoms/1/users/1')
+            .delete('/meds/1/users/1')
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .delete('/symptoms/1/users/1')
+            .delete('/meds/1/users/1')
         expect(resp.statusCode).toEqual(401);
     });
-    test('not found for invalid userSymptom', async function(){
+    test('not found for invalid userMedication', async function(){
         const resp = await request(app)
-            .delete('/symptoms/1/users/3')
+            .delete('/meds/1/users/3')
             .set('authorization', u2Token)
         expect(resp.statusCode).toEqual(404);
-        expect(resp.body.error.message).toContain('No such userSymptom exists');
+        expect(resp.body.error.message).toContain('No such userMedication exists');
     });
 });
 
-/** POST /symptoms/users/:userId/tracking */
-describe('POST /symptoms/users/:userId/tracking', function(){
+/** POST /meds/users/:userId/tracking */
+describe('POST /meds/users/:userId/tracking', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .post('/symptoms/users/1/tracking')
+            .post('/meds/users/1/tracking')
             .send({
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-24',
-                timespan: '12-8 AM',
-                severity: 3
+                timeOfDay: 'AM',
+                number: 3
             })
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
             trackingRecord: {
-                symtrackId: expect.any(Number),
+                medtrackId: expect.any(Number),
                 userId: 1,
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-24', 
-                timespan: '12-8 AM', 
-                severity: 3,
+                timeOfDay: 'AM', 
+                number: 3,
                 trackedAt: expect.any(Date)
             }
         });
     });
     test('works for matching user', async function(){
         const resp = await request(app)
-            .post('/symptoms/users/1/tracking')
+            .post('/meds/users/1/tracking')
             .send({
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-24',
-                timespan: '8 AM-12 PM',
-                severity: 1
+                timeOfDay: 'PM',
+                number: 1
             })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
             trackingRecord: {
-                symtrackId: expect.any(Number),
+                medtrackId: expect.any(Number),
                 userId: 1,
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-24', 
-                timespan: '8 AM-12 PM', 
-                severity: 1,
+                timeOfDay: 'PM', 
+                number: 1,
                 trackedAt: expect.any(Date)
             }
         });
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .post('/symptoms/users/1/tracking')
+            .post('/meds/users/1/tracking')
             .send({
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-24',
-                timespan: '12-4 PM',
-                severity: 1
+                timeOfDay: 'PM',
+                number: 1
             })
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .post('/symptoms/users/1/tracking')
+            .post('/meds/users/1/tracking')
             .send({
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-24',
-                timespan: '12-4 PM',
-                severity: 1
+                timeOfDay: 'PM',
+                number: 1
             })
         expect(resp.statusCode).toEqual(401);
     });
     test('bad request with missing data', async function(){
         const resp = await request(app)
-            .post('/symptoms/users/1/tracking')
+            .post('/meds/users/1/tracking')
             .send({
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-24',
-                severity: 1
+                number: 1
             })
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance requires property "timespan"');
+        expect(resp.body.error.message).toContain('instance requires property "timeOfDay"');
     });
     test('bad request with invalid data', async function(){
         const resp = await request(app)
-            .post('/symptoms/users/1/tracking')
+            .post('/meds/users/1/tracking')
             .send({
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-24',
-                timespan: '12-8 PM',
-                severity: 1
+                timeOfDay: 'Morning',
+                number: 1
             })
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance.timespan');
+        expect(resp.body.error.message).toContain('instance.timeOfDay');
     });
     test('bad request with duplicate tracking record', async function(){
         const resp = await request(app)
-            .post('/symptoms/users/1/tracking')
+            .post('/meds/users/1/tracking')
             .send({
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-21',
-                timespan: '12-8 AM',
-                severity: 4
+                timeOfDay: 'AM',
+                number: 4
             })
         expect(resp.statusCode).toEqual(400);
         expect(resp.body.error.message).toContain('That tracking record already exists');
     });
-    test('not found for invalid userSymptom', async function(){
+    test('not found for invalid userMedication', async function(){
         const resp = await request(app)
-            .post('/symptoms/users/3/tracking')
+            .post('/meds/users/3/tracking')
             .send({
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-24',
-                timespan: '12-8 PM',
-                severity: 1
+                timeOfDay: 'PM',
+                number: 1
             })
         expect(resp.statusCode).toEqual(404);
-        expect(resp.body.error.message).toContain('No such userSymptom exists');
+        expect(resp.body.error.message).toContain('No such userMedication exists');
     });
 });
 
-/** GET /symptoms/users/:userId/tracking */
-describe('GET /symptoms/users/:userId/tracking', function(){
+/** GET /meds/users/:userId/tracking */
+describe('GET /meds/users/:userId/tracking', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .get('/symptoms/users/1/tracking')
+            .get('/meds/users/1/tracking')
             .set('authorization', u2Token);
         expect(resp.body).toEqual({
             trackingRecords: [
                 {
-                    symtrackId: expect.any(Number),
+                    medtrackId: expect.any(Number),
                     userId: 1,
-                    symptomId: 1, 
+                    medId: 1, 
                     trackDate: '2024-09-21',
-                    timespan: '12-8 AM',
-                    severity: 3,
+                    timeOfDay: 'AM',
+                    number: 2,
                     trackedAt: expect.any(Date)
                 },
                 {
-                    symtrackId: expect.any(Number),
+                    medtrackId: expect.any(Number),
                     userId: 1,
-                    symptomId: 1, 
+                    medId: 1, 
                     trackDate: '2024-09-21',
-                    timespan: '8 AM-12 PM',
-                    severity: 2,
-                    trackedAt: expect.any(Date)
-                },
-                {
-                    symtrackId: expect.any(Number),
-                    userId: 1,
-                    symptomId: 1, 
-                    trackDate: '2024-09-21',
-                    timespan: '12-4 PM',
-                    severity: 1,
+                    timeOfDay: 'PM',
+                    number: 1,
                     trackedAt: expect.any(Date)
                 }
             ]      
@@ -674,35 +665,26 @@ describe('GET /symptoms/users/:userId/tracking', function(){
     });
     test('works for matching user', async function(){
         const resp = await request(app)
-            .get('/symptoms/users/1/tracking')
+            .get('/meds/users/1/tracking')
             .set('authorization', u1Token);
         expect(resp.body).toEqual({
             trackingRecords: [
                 {
-                    symtrackId: expect.any(Number),
+                    medtrackId: expect.any(Number),
                     userId: 1,
-                    symptomId: 1, 
+                    medId: 1, 
                     trackDate: '2024-09-21',
-                    timespan: '12-8 AM',
-                    severity: 3,
+                    timeOfDay: 'AM',
+                    number: 2,
                     trackedAt: expect.any(Date)
                 },
                 {
-                    symtrackId: expect.any(Number),
+                    medtrackId: expect.any(Number),
                     userId: 1,
-                    symptomId: 1, 
+                    medId: 1, 
                     trackDate: '2024-09-21',
-                    timespan: '8 AM-12 PM',
-                    severity: 2,
-                    trackedAt: expect.any(Date)
-                },
-                {
-                    symtrackId: expect.any(Number),
-                    userId: 1,
-                    symptomId: 1, 
-                    trackDate: '2024-09-21',
-                    timespan: '12-4 PM',
-                    severity: 1,
+                    timeOfDay: 'PM',
+                    number: 1,
                     trackedAt: expect.any(Date)
                 }
             ] 
@@ -710,86 +692,86 @@ describe('GET /symptoms/users/:userId/tracking', function(){
     });
     test('returns empty array if no tracking data', async function(){
         const resp = await request(app)
-            .get('/symptoms/users/3/tracking')
-            .set('authorization', u3Token);
+            .get('/meds/users/2/tracking')
+            .set('authorization', u2Token);
         expect(resp.body).toEqual([]);
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .get('/symptoms/users/1/tracking')
+            .get('/meds/users/1/tracking')
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .get('/symptoms/users/1/tracking')
+            .get('/meds/users/1/tracking')
         expect(resp.statusCode).toEqual(401);
     });
 });
 
-/** GET /symptoms/users/:userId/tracking/:symtrackId */
-describe('GET /symptoms/users/:userId/tracking/:symtrackId', async function(){
-    const symtrackId = await db.query(
-        `SELECT symtrack_id
-        FROM symptom_tracking
-        WHERE track_date = '2024-09-21 AND timespan = '12-8 AM'`
+/** GET /meds/users/:userId/tracking/:medtrackId */
+describe('GET /meds/users/:userId/tracking/:medtrackId', async function(){
+    const medtrackId = await db.query(
+        `SELECT medtrack_id
+        FROM medication_tracking
+        WHERE track_date = '2024-09-21 AND time_of_day = 'AM'`
     );
     test('works for admin', async function(){
         const resp = await request(app)
-            .get(`/symptoms/users/1/tracking/${symtrackId}`)
+            .get(`/meds/users/1/tracking/${medtrackId}`)
             .set('authorization', u2Token)
         expect(resp.body).toEqual({
             trackingRecord: {
-                symtrackId: symtrackId,
+                medtrackId: medtrackId,
                 userId: 1,
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-21', 
-                timespan: '12-8 AM', 
-                severity: 3,
+                timeOfDay: 'AM', 
+                number: 2,
                 trackedAt: expect.any(Date)
             }
         });
     });
     test('works for matching user', async function(){
         const resp = await request(app)
-            .get(`/symptoms/users/1/tracking/${symtrackId}`)
+            .get(`/meds/users/1/tracking/${medtrackId}`)
             .set('authorization', u1Token)
         expect(resp.body).toEqual({
             trackingRecord: {
-                symtrackId: symtrackId,
+                medtrackId: medtrackId,
                 userId: 1,
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-21', 
-                timespan: '12-8 AM', 
-                severity: 3,
+                timeOfDay: 'AM', 
+                number: 2,
                 trackedAt: expect.any(Date)
             }
         });
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .get(`/symptoms/users/1/tracking/${symtrackId}`)
+            .get(`/meds/users/1/tracking/${medtrackId}`)
             .set('authorization', u3Token)
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .get(`/symptoms/users/1/tracking/${symtrackId}`)
+            .get(`/meds/users/1/tracking/${medtrackId}`)
         expect(resp.statusCode).toEqual(401);
     });
     test('not found for invalid tracking record', async function(){
         const resp = await request(app)
-            .get(`/symptoms/users/1/tracking/0`)
+            .get(`/medications/users/1/tracking/0`)
         expect(resp.statusCode).toEqual(404);
         expect(resp.body.error.message).toContain('No such tracking record exists');
     });
 });
 
-/** GET /symptoms/users/:userId/tracking/date */
-describe('GET /symptoms/users/:userId/tracking/date', function(){
+/** GET /meds/users/:userId/tracking/date */
+describe('GET /meds/users/:userId/tracking/date', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .get('/symptoms/users/1/tracking/date')
+            .get('/meds/users/1/tracking/date')
             .send({
                 trackDate: '2024-09-21'
             })
@@ -797,30 +779,21 @@ describe('GET /symptoms/users/:userId/tracking/date', function(){
         expect(resp.body).toEqual({
             trackingRecords: [
                 {
-                    symtrackId: expect.any(Number),
+                    medtrackId: expect.any(Number),
                     userId: 1,
-                    symptomId: 1, 
+                    medId: 1, 
                     trackDate: '2024-09-21',
-                    timespan: '12-8 AM',
-                    severity: 3,
+                    timeOfDay: 'AM',
+                    number: 2,
                     trackedAt: expect.any(Date)
                 },
                 {
-                    symtrackId: expect.any(Number),
+                    medtrackId: expect.any(Number),
                     userId: 1,
-                    symptomId: 1, 
+                    medId: 1, 
                     trackDate: '2024-09-21',
-                    timespan: '8 AM-12 PM',
-                    severity: 2,
-                    trackedAt: expect.any(Date)
-                },
-                {
-                    symtrackId: expect.any(Number),
-                    userId: 1,
-                    symptomId: 1, 
-                    trackDate: '2024-09-21',
-                    timespan: '12-4 PM',
-                    severity: 1,
+                    timeOfDay: 'PM',
+                    number: 1,
                     trackedAt: expect.any(Date)
                 }
             ]
@@ -828,7 +801,7 @@ describe('GET /symptoms/users/:userId/tracking/date', function(){
     });
     test('works for matching user', async function(){
         const resp = await request(app)
-            .get('/symptoms/users/1/tracking/date')
+            .get('/meds/users/1/tracking/date')
             .send({
                 trackDate: '2024-09-21'
             })
@@ -836,30 +809,21 @@ describe('GET /symptoms/users/:userId/tracking/date', function(){
         expect(resp.body).toEqual({
             trackingRecords: [
                 {
-                    symtrackId: expect.any(Number),
+                    medtrackId: expect.any(Number),
                     userId: 1,
-                    symptomId: 1, 
+                    medId: 1, 
                     trackDate: '2024-09-21',
-                    timespan: '12-8 AM',
-                    severity: 3,
+                    timeOfDay: 'AM',
+                    number: 2,
                     trackedAt: expect.any(Date)
                 },
                 {
-                    symtrackId: expect.any(Number),
+                    medtrackId: expect.any(Number),
                     userId: 1,
-                    symptomId: 1, 
+                    medId: 1, 
                     trackDate: '2024-09-21',
-                    timespan: '8 AM-12 PM',
-                    severity: 2,
-                    trackedAt: expect.any(Date)
-                },
-                {
-                    symtrackId: expect.any(Number),
-                    userId: 1,
-                    symptomId: 1, 
-                    trackDate: '2024-09-21',
-                    timespan: '12-4 PM',
-                    severity: 1,
+                    timeOfDay: 'PM',
+                    number: 1,
                     trackedAt: expect.any(Date)
                 }
             ]
@@ -867,7 +831,7 @@ describe('GET /symptoms/users/:userId/tracking/date', function(){
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .get('/symptoms/users/1/tracking/date')
+            .get('/meds/users/1/tracking/date')
             .send({
                 trackDate: '2024-09-21'
             })
@@ -876,7 +840,7 @@ describe('GET /symptoms/users/:userId/tracking/date', function(){
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .get('/symptoms/users/1/tracking/date')
+            .get('/meds/users/1/tracking/date')
             .send({
                 trackDate: '2024-09-21'
             })
@@ -884,7 +848,7 @@ describe('GET /symptoms/users/:userId/tracking/date', function(){
     });
     test('returns empty array if no tracking data', async function(){
         const resp = await request(app)
-            .get('/symptoms/users/1/tracking/date')
+            .get('/meds/users/1/tracking/date')
             .send({
                 trackDate: '2024-09-22'
             })
@@ -893,91 +857,91 @@ describe('GET /symptoms/users/:userId/tracking/date', function(){
     });
 });
 
-/** PATCH /symptoms/users/:userId/tracking/:symtrackId */
-describe('PATCH /symptoms/users/:userId/tracking/:symtrackId', async function(){
-    const symtrackId = await db.query(
-        `SELECT symtrack_id
-        FROM symptom_tracking
-        WHERE track_date = '2024-09-21 AND timespan = '12-8 AM'`
+/** PATCH /meds/users/:userId/tracking/:medtrackId */
+describe('PATCH /meds/users/:userId/tracking/:medtrackId', async function(){
+    const medtrackId = await db.query(
+        `SELECT medtrack_id
+        FROM medication_tracking
+        WHERE track_date = '2024-09-21 AND timeOfDay = 'AM'`
     );
     test('works for admin', async function(){
         const resp = await request(app)
-            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .patch(`/medications/users/1/tracking/${medtrackId}`)
             .send({
-                severity: 5
+                number: 5
             })
             .set('authorization', u2Token);
         expect(resp.body).toEqual({
             trackingRecord: {
-                symtrackId: symtrackId,
+                medtrackId: medtrackId,
                 userId: 1,
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-21',
-                timespan: '12-8 AM', 
-                severity: 5,
+                timeOfDay: 'AM', 
+                number: 5,
                 trackedAt: expect.any(Date)
             }
         });
     });
     test('works for matching user', async function(){
         const resp = await request(app)
-            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .patch(`/meds/users/1/tracking/${medtrackId}`)
             .send({
-                severity: 4
+                number: 4
             })
             .set('authorization', u1Token);
         expect(resp.body).toEqual({
             trackingRecord: {
-                symtrackId: symtrackId,
+                medtrackId: medtrackId,
                 userId: 1,
-                symptomId: 1,
+                medId: 1,
                 trackDate: '2024-09-21',
-                timespan: '12-8 AM', 
-                severity: 4,
+                timeOfDay: 'AM', 
+                number: 4,
                 trackedAt: expect.any(Date)
             }
         });
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .patch(`/meds/users/1/tracking/${medtrackId}`)
             .send({
-                severity: 4
+                number: 4
             })
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .patch(`/meds/users/1/tracking/${medtrackId}`)
             .send({
-                severity: 4
+                number: 4
             })
         expect(resp.statusCode).toEqual(401);
     });
     test('bad request with missing data', async function(){
         const resp = await request(app)
-            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .patch(`/meds/users/1/tracking/${medtrackId}`)
             .send({})
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance requires property "severity"');
+        expect(resp.body.error.message).toContain('instance requires property "number"');
     });
     test('bad request with invalid data', async function(){
         const resp = await request(app)
-            .patch(`/symptoms/users/1/tracking/${symtrackId}`)
+            .patch(`/meds/users/1/tracking/${medtrackId}`)
             .send({
-                severity: '2024-09-22'
+                number: '2024-09-22'
             })
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance.severity');
+        expect(resp.body.error.message).toContain('instance.number');
     });
     test('not found for invalid tracking record', async function(){
         const resp = await request(app)
-            .patch(`/symptoms/users/1/tracking/0`)
+            .patch(`/meds/users/1/tracking/0`)
             .send({
-                severity: 5
+                number: 5
             })
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(404);
@@ -985,51 +949,51 @@ describe('PATCH /symptoms/users/:userId/tracking/:symtrackId', async function(){
     });
 });
 
-/** DELETE /symptoms/users/:userId/tracking/:symtrackId */
-describe('DELETE /symptoms/users/:userId/tracking/:symtrackId', async function(){
-    const symtrackId = await db.query(
-        `SELECT symtrack_id
-        FROM symptom_tracking
-        WHERE track_date = '2024-09-21 AND timespan = '12-8 AM'`
+/** DELETE /meds/users/:userId/tracking/:medtrackId */
+describe('DELETE /meds/users/:userId/tracking/:medtrackId', async function(){
+    const medtrackId = await db.query(
+        `SELECT medtrack_id
+        FROM medication_tracking
+        WHERE track_date = '2024-09-21 AND timeOfDay = 'AM'`
     );
     test('works for admin', async function(){
         const resp = await request(app)
-            .delete(`/symptoms/users/1/tracking/${symtrackId}`)
+            .delete(`/meds/users/1/tracking/${medtrackId}`)
             .set('authorization', u2Token);
-        expect(resp.body).toEqual({deleted: symtrackId});
+        expect(resp.body).toEqual({deleted: medtrackId});
     });
     test('works for matching user', async function(){
         const resp = await request(app)
-            .delete(`/symptoms/users/1/tracking/${symtrackId}`)
+            .delete(`/meds/users/1/tracking/${medtrackId}`)
             .set('authorization', u1Token);
-        expect(resp.body).toEqual({deleted: symtrackId});
+        expect(resp.body).toEqual({deleted: medtrackId});
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .delete(`/symptoms/users/1/tracking/${symtrackId}`)
+            .delete(`/meds/users/1/tracking/${medtrackId}`)
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .delete(`/symptoms/users/1/tracking/${symtrackId}`)
+            .delete(`/meds/users/1/tracking/${medtrackId}`)
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(401);
     });
     test('not found for invalid tracking record', async function(){
         const resp = await request(app)
-            .delete(`/symptoms/users/1/tracking/0`)
+            .delete(`/meds/users/1/tracking/0`)
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(404);
         expect(resp.body.error.message).toContain('No such tracking record exists');
     });
 });
 
-/** DELETE /symptoms/users/:userId/tracking/date */
-describe('DELETE /symptoms/users/:userId/tracking/date', function(){
+/** DELETE /meds/users/:userId/tracking/date */
+describe('DELETE /meds/users/:userId/tracking/date', function(){
     test('works for admin', async function(){
         const resp = await request(app)
-            .delete(`/symptoms/users/1/tracking/date`)
+            .delete(`/meds/users/1/tracking/date`)
             .send({
                 trackDate: '2024-09-21'
             })
@@ -1038,7 +1002,7 @@ describe('DELETE /symptoms/users/:userId/tracking/date', function(){
     });
     test('works for matching user', async function(){
         const resp = await request(app)
-            .delete(`/symptoms/users/1/tracking/date`)
+            .delete(`/meds/users/1/tracking/date`)
             .send({
                 trackDate: '2024-09-21'
             })
@@ -1047,7 +1011,7 @@ describe('DELETE /symptoms/users/:userId/tracking/date', function(){
     });
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
-            .delete(`/symptoms/users/1/tracking/date`)
+            .delete(`/meds/users/1/tracking/date`)
             .send({
                 trackDate: '2024-09-21'
             })
@@ -1056,7 +1020,7 @@ describe('DELETE /symptoms/users/:userId/tracking/date', function(){
     });
     test('unauthorized for anonymous', async function(){
         const resp = await request(app)
-            .delete(`/symptoms/users/1/tracking/date`)
+            .delete(`/meds/users/1/tracking/date`)
             .send({
                 trackDate: '2024-09-21'
             })
@@ -1064,7 +1028,7 @@ describe('DELETE /symptoms/users/:userId/tracking/date', function(){
     });
     test('not found for invalid tracking records', async function(){
         const resp = await request(app)
-            .delete(`/symptoms/users/1/tracking/date`)
+            .delete(`/meds/users/1/tracking/date`)
             .send({
                 trackDate: '2024-09-25'
             })

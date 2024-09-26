@@ -6,6 +6,22 @@
 ## Write Back End (9/19-9/30)
     ## Medication Routes & Models 
         - write route tests (9/26)
+            - POST /meds/
+            - GET /meds/
+            - GET /meds/:medId
+            - PATCH meds/:medId
+            - DELETE /meds/:medId
+            - POST /meds/:medId/users/:userId
+            - GET /meds/:medId/users/:userId
+            - PATCH /meds/:medId/users/:userId
+            - DELETE /meds/:medId/user/:userId
+            - POST /meds/users/:userId/tracking
+            - GET /meds/users/:userId/tracking
+            - GET /meds/users/:userId/tracking/:medtrackId
+            - GET /meds/users/:userId/tracking/date
+            - PATCH /meds/users/:userId/tracking/:medtrackId
+            - DELETE /meds/users/:userId/tracking/:medtrackId
+            - DELETE /meds/users/:userId/tracking/date
             - COMMIT
         - write routes (9/27)
             - new medication schema
@@ -14,21 +30,22 @@
             - change userMedication schema
             - new medication tracking schema
             - update mediation tracking schema
-            - create/select medication and connect it to a user
-            - get list of all medications
-            - get individual medication
-            - edit medication schema
-            - update medication
-            - delete medicaton
-            - new medication tracking record schema
-            - create medication tracking record
-            - get list of all medication tracking records for one user
-            - get individual medication tracking record
-            - get all mediation tracking records for a single day
-            - edit medication tracking record schema
-            - update medication tracking record
-            - delete medicaton tracking record
-            - delete medication tracking records for a single day
+            - POST /meds/
+            - GET /meds/
+            - GET /meds/:medId
+            - PATCH meds/:medId
+            - DELETE /meds/:medId
+            - POST /meds/:medId/users/:userId
+            - GET /meds/:medId/users/:userId
+            - PATCH /meds/:medId/users/:userId
+            - DELETE /meds/:medId/user/:userId
+            - POST /meds/users/:userId/tracking
+            - GET /meds/users/:userId/tracking
+            - GET /meds/users/:userId/tracking/:medtrackId
+            - GET /meds/users/:userId/tracking/date
+            - PATCH /meds/users/:userId/tracking/:medtrackId
+            - DELETE /meds/users/:userId/tracking/:medtrackId
+            - DELETE /meds/users/:userId/tracking/date
             - COMMIT
     ## Data Routes & Models (9/27)
         - write model tests
