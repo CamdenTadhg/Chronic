@@ -141,17 +141,28 @@ describe('Medication.delete', async function(){
 /**Medication.userConnect */
 describe('Medication.userConnect', async function(){
     test('works for valid user & medication', async function(){
-        const userMedication = await Medication.userConnect(u1, m3);
+        const userMedication = await Medication.userConnect(u1, m3, {
+            dosageNum: 300,
+            dosageUnit: 'mg',
+            timeOfDay: ['AM', 'PM']
+        });
         expect(userMedication).toEqual({
             userId: u1,
-            medId: m3
+            medId: m3,
+            dosageNum: 300,
+            dosageUnit: 'mg',
+            timeOfDay: ['AM', 'PM']
         });
         const found = await db.query(`SELECT * FROM users_medications WHERE user_id = $1 AND med_id = $2`, [u1, m3]);
         expect(found.rows.length).toEqual(1);
     });
     test('NotFound error with invalid user', async function(){
         try{
-            Medication.userConnect(0, m3);
+            Medication.userConnect(0, m3, {
+                dosageNum: 300,
+                dosageUnit: 'mg',
+                timeOfDay: ['AM', 'PM']
+            });
             fail();
         } catch(err){
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -159,7 +170,11 @@ describe('Medication.userConnect', async function(){
     });
     test('NotFound error with invalid medication', async function(){
         try{
-            Medication.userConnect(u1, 0);
+            Medication.userConnect(u1, 0, {
+                dosageNum: 300,
+                dosageUnit: 'mg',
+                timeOfDay: ['AM', 'PM']
+            });
             fail();
         } catch(err){
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -167,7 +182,11 @@ describe('Medication.userConnect', async function(){
     });
     test('BadRequest error with existing userMedication', async function(){
         try{
-            Medication.userConnect(u1, m1);
+            Medication.userConnect(u1, m1, {
+                dosageNum: 300,
+                dosageUnit: 'mg',
+                timeOfDay: ['AM', 'PM']
+            });
             fail();
         } catch(err){
             expect(err instanceof BadRequestError).toBeTruthy();
@@ -182,6 +201,9 @@ describe('Medication.userGet', function(){
         expect(userMedication).toEqual({
             userId: u1,
             medId: m1,
+            dosageNum: 200,
+            dosageUnit: 'mg', 
+            timeOfDay: ['AM', 'PM']
         });
     });
     test('NotFound with invalid medication', async function(){
@@ -213,16 +235,29 @@ describe('Medication.userGet', function(){
 /**Medication.userChange */
 describe('Medication.userChange', async function(){
     test('works for valid user & medication', async function(){
-        const userMedication = await Medication.userChange(u1, m1, {medId: m3});
+        const userMedication = await Medication.userChange(u1, m1, {
+            medId: m3,
+            dosageNum: 450,
+            dosageUnit: 'mg', 
+            timeOfDay: ['AM']
+        });
         expect(userMedication).toEqual({
             userId: u1,
-            medId: m3
+            medId: m3,
+            dosageNum: 450,
+            dosageUnit: 'mg',
+            timeOfDay: ['AM']
         });
     });
     test('NotFound error with invalid userMedication', async function(){
         try{
 
-            Medication.userChange(u1, 0, {medId: m2});
+            Medication.userChange(u1, 0, {
+                medId: m2,
+                dosageNum: 450,
+                dosageUnit: 'mg',
+                timeOfDay: ['AM']
+            });
             fail();
         } catch(err){
             expect(err instanceof NotFoundError).toBeTruthy();
@@ -230,7 +265,12 @@ describe('Medication.userChange', async function(){
     });
     test('BadRequest error with existing userMedication', async function(){
         try{
-            Medication.userChange(u1, m1, {medId: m2});
+            Medication.userChange(u1, m1, {
+                medId: m2,
+                dosageNum: 450,
+                dosageUnit: 'mg',
+                timeOfDay: ['AM']
+            });
             fail();
         } catch(err){
             expect(err instanceof BadRequestError).toBeTruthy();

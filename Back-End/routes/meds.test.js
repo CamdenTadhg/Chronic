@@ -264,24 +264,40 @@ describe('POST /meds/:medId/users/:userId', function(){
     test('works for admin', async function(){
         const resp = await request(app)
             .post('/meds/2/users/1/')
+            .send({
+                dosageNum: 200,
+                dosageUnit: 'mg', 
+                timeOfDay: ['AM', 'PM']
+            })
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
             userMedication: {
                 userId: 1,
-                medId: 2
+                medId: 2,
+                dosageNum: 200,
+                dosageUnit: 'mg', 
+                timeOfDay: ['AM', 'PM']
             }
         });
     });
     test('works for matching user with existing medication', async function(){
         const resp = await request(app)
             .post('/meds/2/users/1/')
+            .send({
+                dosageNum: 200,
+                dosageUnit: 'mg', 
+                timeOfDay: ['AM', 'PM']
+            })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
             userMedication: {
                 userId: 1,
-                medId: 2
+                medId: 2, 
+                dosageNum: 200,
+                dosageUnit: 'mg', 
+                timeOfDay: ['AM', 'PM']
             }
         });
     });
@@ -289,14 +305,20 @@ describe('POST /meds/:medId/users/:userId', function(){
         const resp = await request(app)
             .post('/meds/0/users/1/')
             .send({
-                medication: 'lethargy'
+                medication: 'propanalol',
+                dosageNum: 200,
+                dosageUnit: 'mg', 
+                timeOfDay: ['Midday']
             })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(201);
         expect(resp.body).toEqual({
             userMedication: {
                 userId: 1,
-                medId: expect.any(Number)
+                medId: expect.any(Number),
+                dosageNum: 200,
+                dosageUnit: 'mg',
+                timeOfDay: ['Midday']
             }
         });
         const found = await request(app)
@@ -307,6 +329,11 @@ describe('POST /meds/:medId/users/:userId', function(){
     test('forbidden for non-matching user', async function(){
         const resp = await request(app)
             .post('/meds/2/users/1/')
+            .send({
+                dosageNum: 200,
+                dosageUnit: 'mg', 
+                timeOfDay: ['AM', 'PM']
+            })
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
     });
@@ -314,31 +341,43 @@ describe('POST /meds/:medId/users/:userId', function(){
         const resp = await request(app)
             .post('/meds/0/users/1/')
             .send({
-                medication: 'lethargy'
+                dosageNum: 200,
+                dosageUnit: 'mg', 
+                timeOfDay: ['AM', 'PM']
             })
         expect(resp.statusCode).toEqual(401);
     });
     test('bad request with missing data', async function(){
         const resp = await request(app)
-            .post('/meds/0/users/1/')
-            .send({})
+            .post('/meds/3/users/1/')
+            .send({
+                dosageNum: 200,
+                dosageUnit: 'mg', 
+            })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance requires property "medication"');
+        expect(resp.body.error.message).toContain('instance requires property "timeOfDay"');
     });
     test('bad request with invalid data', async function(){
         const resp = await request(app)
             .post('/meds/0/users/1/')
             .send({
-                medication: 1
+                dosageNum: 200,
+                dosageUnit: 3, 
+                timeOfDay: ['AM', 'PM']
             })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(400);
-        expect(resp.body.error.message).toContain('instance.medication');
+        expect(resp.body.error.message).toContain('instance.dosageUnit');
     });
     test('bad request with duplicate connection', async function(){
         const resp = await request(app)
             .post('/meds/1/users/1/')
+            .send({
+                dosageNum: 200,
+                dosageUnit: 3, 
+                timeOfDay: ['AM', 'PM']
+            })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(400);
         expect(resp.body.error.message).toContain('This medication has already been assigned');
@@ -346,6 +385,11 @@ describe('POST /meds/:medId/users/:userId', function(){
     test('not found for invalid medication', async function(){
         const resp = await request(app)
             .post('/meds/25/users/1/')
+            .send({
+                dosageNum: 200,
+                dosageUnit: 3, 
+                timeOfDay: ['AM', 'PM']
+            })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(404);
         expect(resp.body.error.message).toContain('No such medication exists');
@@ -353,6 +397,11 @@ describe('POST /meds/:medId/users/:userId', function(){
     test('not found for invalid user', async function(){
         const resp = await request(app)
             .post('/meds/1/users/0/')
+            .send({
+                dosageNum: 200,
+                dosageUnit: 3, 
+                timeOfDay: ['AM', 'PM']
+            })
             .set('authorization', u1Token);
         expect(resp.statusCode).toEqual(404);
         expect(resp.body.error.message).toContain('No such user exists');
@@ -368,7 +417,10 @@ describe('GET /meds/:medId/users/:userId', function(){
         expect(resp.body).toEqual({
             userMedication: {
                 userId: 1,
-                medId: 1
+                medId: 1,
+                dosageNum: 300,
+                dosageUnit: 'mg', 
+                timeOfDay: ['AM', 'PM']
             }
         });
     });
@@ -379,7 +431,10 @@ describe('GET /meds/:medId/users/:userId', function(){
         expect(resp.body).toEqual({
             userMedication: {
                 userId: 1,
-                medId: 1
+                medId: 1,
+                dosageNum: 300,
+                dosageUnit: 'mg', 
+                timeOfDay: ['AM', 'PM']
             }
         });
     });
@@ -415,7 +470,10 @@ describe('PATCH /meds/:medId/users/:userId', function(){
         expect(resp.body).toEqual({
             userMedication: {
                 userId: 1,
-                medId: 2
+                medId: 2,
+                dosageNum: 300,
+                dosageUnit: 'mg', 
+                timeOfDay: ['AM', 'PM']
             }
         });
     });
@@ -423,13 +481,19 @@ describe('PATCH /meds/:medId/users/:userId', function(){
         const resp = await request(app)
             .patch('/meds/1/users/1')
             .send({
-                medId: 3
+                medId: 1,
+                dosageNum: 200,
+                dosageUnit: 'UI', 
+                timeOfDay: ['Midday']
             })
             .set('authorization', u1Token);
         expect(resp.body).toEqual({
             userMedication: {
                 userId: 1,
-                medId: 2
+                medId: 1,
+                dosageNum: 200,
+                dosageUnit: 'UI',
+                timeOfDay: ['Midday']
             }
         });
     });
@@ -437,7 +501,10 @@ describe('PATCH /meds/:medId/users/:userId', function(){
         const resp = await request(app)
             .patch('/meds/1/users/1')
             .send({
-                medId: 3
+                medId: 1,
+                dosageNum: 200,
+                dosageUnit: 'UI', 
+                timeOfDay: ['Midday']
             })
             .set('authorization', u3Token);
         expect(resp.statusCode).toEqual(403);
@@ -446,14 +513,22 @@ describe('PATCH /meds/:medId/users/:userId', function(){
         const resp = await request(app)
             .patch('/meds/1/users/1')
             .send({
-                medId: 3
+                medId: 1,
+                dosageNum: 200,
+                dosageUnit: 'UI', 
+                timeOfDay: ['Midday']
             })
         expect(resp.statusCode).toEqual(401);
     });
     test('bad request with missing data', async function(){
         const resp = await request(app)
             .patch('/meds/2/users/2')
-            .send({})
+            .send({
+                medId: 1,
+                dosageNum: 200,
+                dosageUnit: 'UI', 
+                timeOfDay: ['Midday']
+            })
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(400);
         expect(resp.body.error.message).toContain('instance requires property "medId"');
@@ -472,7 +547,10 @@ describe('PATCH /meds/:medId/users/:userId', function(){
         const resp = await request(app)
             .patch('/meds/1/users/3')
             .send({
-                medId: 2
+                medId: 1,
+                dosageNum: 200,
+                dosageUnit: 'UI', 
+                timeOfDay: ['Midday']
             })
             .set('authorization', u2Token);
         expect(resp.statusCode).toEqual(404);

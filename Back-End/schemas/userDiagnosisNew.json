@@ -2,7 +2,10 @@
     "type": "object",
     "properties": {
         "keywords": {
-            "type": "array"
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
         }
     },
     "additionalProperties": false,

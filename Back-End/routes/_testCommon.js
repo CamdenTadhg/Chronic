@@ -4,7 +4,7 @@ const db = require('../db.js');
 const User = require('../models/user');
 const Diagnosis = require('../models/diagnosis');
 const Symptom = require('../models/symptom');
-const Medication = require('../models/med');
+const Medication = require('../models/medication');
 const {createToken} = require('../helpers/tokens');
 
 async function commonBeforeAll() {
@@ -48,9 +48,9 @@ async function commonBeforeAll() {
         synonyms: ['d3']
     });
 
-    await User.assignDiag(1, 1, ["pain"]);
-    await User.assignDiag(2, 2, []);
-    await User.assignDiag(3, 3, ["fatigue", "long covid"]);
+    await Diagnosis.userConnect(1, 1, ["pain"]);
+    await Diagnosis.userConnect(2, 2, []);
+    await Diagnosis.userConnect(3, 3, ["fatigue", "long covid"]);
 
     await Symptom.create({
         symptom_id: 1,
@@ -65,9 +65,9 @@ async function commonBeforeAll() {
         symptom: 'S3'
     });
 
-    await User.assignSymp(1, 1);
-    await User.assignSymp(2, 2);
-    await User.assignSymp(3, 3);
+    await Symptom.userConnect(1, 1);
+    await Symptom.userConnect(2, 2);
+    await Symptom.userConnect(3, 3);
 
     await Symptom.track({
         user_id: 1,
@@ -104,9 +104,9 @@ async function commonBeforeAll() {
         medication: 'M3'
     });
 
-    await User.assignMed(1, 1, 300, 'mg', ['AM', 'PM']);
-    await User.assignMed(2, 2, 150, 'mg', ['AM']);
-    await User.assignMed(3, 3, 1, 'pill', ['AM', 'Midday', 'PM', 'Evening']);
+    await Medication.userConnect(1, 1, 300, 'mg', ['AM', 'PM']);
+    await Medication.userConnect(2, 2, 150, 'mg', ['AM']);
+    await Medication.userConnect(3, 3, 1, 'pill', ['AM', 'Midday', 'PM', 'Evening']);
 
     await Medication.track({
         user_id: 1, 

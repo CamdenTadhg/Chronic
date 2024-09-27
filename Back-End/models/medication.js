@@ -122,7 +122,7 @@ class Medication {
      * BadRequest error if medication connection already exists
      */
 
-    static async userConnect(userId, medId){
+    static async userConnect(userId, medId, data){
         const duplicateCheck = await db.query(
             `SELECT * 
             FROM users_medications
@@ -148,10 +148,14 @@ class Medication {
 
         const result = await db.query(
             `INSERT INTO users_medications
-            (user_id, med_id)
-            VALUES ($1, $2)
-            RETURNING user_id AS 'userId', med_id AS 'medId'`,
-            [userId, medId]);
+            (user_id, med_id, dosage_num, dosage_unit, time_of_day)
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING   user_id AS 'userId', 
+                        med_id AS 'medId',
+                        dosage_num AS 'dosageNum',
+                        dosage_unit AS 'dosageUnit', 
+                        time_of_day AS 'timeOfDay'`,
+            [userId, medId, data.dosageNum, data.dosageUnit, data.timeOfDay]);
         const userMedication = result.rows[0];
         return userMedication;
     };
@@ -165,7 +169,10 @@ class Medication {
     static async userGet(userId, medId){
         const result = await db.query(
             `SELECT user_id AS 'userId',
-                    med_id AS 'medId'
+                    med_id AS 'medId',
+                    dosage_num AS 'dosageNum', 
+                    dosage_unit AS 'dosageUnit', 
+                    time_of_day AS 'timeOfDay'
             FROM users_medications
             WHERE user_id = $1 AND med_id = $2`,
             [userId, medId]
@@ -202,10 +209,13 @@ class Medication {
         const result = await db.query(
             `UPDATE users_medications
             SET med_id = $1
+                dosage_num = $4,
+                dosage_unit = $5,
+                time_of_day = $6
             WHERE user_id = $2 AND med_id = $3
             RETURNING   user_id AS 'userId',
                         med_id AS 'medId'`, 
-            [data.newMedicationId, userId, medId]);
+            [data.newMedicationId, userId, medId, data.dosageNum, data.dosageUnit, data.timeOfDay]);
         const userMedication = result.rows[0];
 
         if (!userMedication) throw new NotFoundError('No such userMedication exists');
