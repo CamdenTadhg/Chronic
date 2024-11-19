@@ -1,0 +1,334 @@
+$primary: #B1D1E5;
+$secondary: #345265;
+$info: #E6B505;
+$danger: #9B2915;
+
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import "bootstrap/scss/bootstrap";
+
+$navbar-padding-y: 0px;
+$nav-link-color: white;
+$nav-link-font-size: 1.25rem;
+$navbar-brand-color: #E6B505;
+
+
+.brand {
+    text-align: center;
+}
+
+.chronic-logo {
+    height: 8vh;
+}
+
+.logo-text {
+    font-size: 1rem;
+    font-family: 'Josefin Sans', sans-serif;
+    color: #E6B505;
+}
+
+.navbar {
+    padding: 0px;
+    position: sticky;
+}
+
+.navbar-brand {
+    cursor: pointer;
+    padding: 0px;
+    margin: 0px;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-link:hover {
+    color: $primary;
+}
+
+.nav-link:focus:hover {
+    color: $primary;
+}
+
+.nav-link:focus {
+    color: white;
+}
+
+.nav-link.active {
+    color: white;
+}
+
+.modal-dialog {
+    width: 500px;
+}
+
+.modal-content {
+    background-color: $secondary;
+    color: $primary;
+    border-radius: 50px;
+    padding: 10px 30px;
+    position: relative;
+}
+
+.modal-backdrop.show {
+    opacity: 0;
+}
+
+.modal-form {
+    font-size: 1.4rem;
+}
+
+.modal-title {
+    color: $primary;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Josefin Sans', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: $secondary;
+    font-size: 3rem;
+    letter-spacing: 3px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: $primary;
+    height: 100%;
+    overflow: hidden;
+    color: $secondary;
+    font-size: 1rem;
+}
+
+input {
+    width: 80%;
+    margin: 5px;
+}
+
+a {
+    color: $secondary;
+}
+
+.modal-button {
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    width: 150px;
+    bottom: 15px;
+    right: 15px;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.modal-foot {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-errors {
+    font-size: 0.9rem;
+    color: white;
+    text-align: right;
+    background: $danger;
+}
+
+.sidebar {
+    max-height: 89vh;
+    min-height: 89vh;
+    overflow-y: auto;
+    background: white;
+    padding: 0px 15px;
+}
+
+.latest-head {
+    padding: 1vh;
+}
+
+.out-home-page {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.hero-image{
+    height: 60vh;
+    padding: 0;
+    margin:0;
+}
+
+.hero-text {
+    font-size: 3rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 700;
+    color: #8C6E03;
+    padding: 0;
+    margin: 9;
+}
+
+.in-home-page {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.central-directions{
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    height: 15vw;
+}
+
+.directions{
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0px 10px 0px;
+}
+
+.directions-text{
+    width: 15vw;
+    font-size: 1.2rem;
+}
+
+.link-box {
+    border: 5px solid $secondary;
+    padding: 5px;
+    color: $secondary;
+    width: 15vw;
+    height: 15vw;
+    font-size: 3.5vw;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.link-box-a {
+    text-decoration: none;
+}
+
+.arrow {
+    color: $secondary;
+    width: 3vw;
+    height: 3vw;
+}
+
+.main-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.white-page {
+    background: white;
+    width: 100vw;
+    height: 88vh;
+    padding: 10vw;
+    overflow-y: auto;
+}
+
+.page-title {
+    margin-top: 10px;
+    max-height: 10vh;
+}
+
+.text-content {
+    padding: 0vw 10vw;
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+
+.second-section {
+    margin-top: 30px
+}
+
+.logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: baseline;
+    align-content: space-around;
+    gap: 3vw;
+}
+
+.tech-logo-wide {
+    width: 10vw;
+}
+
+.tech-logo-tall {
+    height: 10vh;
+    align-self: flex-end;
+}
+
+.title-text {
+    margin-bottom: 5px;
+}
+
+.abstract-text {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.body-button{
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.profile-button {
+    float: right;   
+}
+
+.flex-form-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 70%;
+}
+
+.flex-label {
+    width: 15%;
+    min-width: 100px;
+    margin: 0px;
+}
+
+.flex-input {
+    flex: 1;
+    border: 2px solid $secondary;
+}
+
+.flex-text {
+    font-size: 1.5rem;
+    font-family: 'Inter', sans-serif;
+    margin-left: 0.5rem;
+    color: $secondary
+}
+
+.diagnosis-item {
+    margin-left: 12%;
+}
+
+.notes {
+    font-size: 1rem;
+}
+
+.textarea {
+    margin-top: 10px;
+    margin-left: 4px;
+}
+
+.delete-button {
+    cursor: pointer;
+}
+

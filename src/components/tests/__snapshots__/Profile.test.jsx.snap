@@ -1,0 +1,2643 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`matches the snapshot 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="p-0 white-page container-fluid"
+      >
+        <div
+          class="navbar-space m-0 p-0 row"
+        />
+        <div
+          class="m-0 p-0 row"
+        >
+          <h2
+            class="page-title"
+          >
+            PROFILE
+          </h2>
+          <form
+            class="text-content"
+            id="profile-form"
+          >
+            <div
+              class="form-errors invalid-feedback"
+            />
+            <button
+              class="body-button submit-button profile-button btn btn-secondary"
+              type="submit"
+            >
+              Save Profile
+            </button>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="email"
+              >
+                Email:
+              </label>
+              <input
+                aria-invalid="false"
+                class="flex-input form-control"
+                id="email"
+                name="email"
+                required=""
+                type="email"
+                value=""
+              />
+              <div
+                class="form-errors invalid-feedback"
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="password"
+              >
+                Password:
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Change Password
+              </button>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="name"
+              >
+                Name:
+              </label>
+              <input
+                class="flex-input form-control"
+                id="name"
+                name="name"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="since"
+              >
+                User Since:
+              </label>
+              <small
+                class="flex-text form-text text-muted"
+                id="since"
+              >
+                Invalid date
+              </small>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="lastLogin"
+              >
+                Last Log In:
+              </label>
+              <div
+                class="flex-text"
+                id="lastLogin"
+              >
+                Invalid date
+              </div>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="diagnoses"
+              >
+                Diagnoses:
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Add a Diagnosis
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="p-0 white-page container-fluid"
+    >
+      <div
+        class="navbar-space m-0 p-0 row"
+      />
+      <div
+        class="m-0 p-0 row"
+      >
+        <h2
+          class="page-title"
+        >
+          PROFILE
+        </h2>
+        <form
+          class="text-content"
+          id="profile-form"
+        >
+          <div
+            class="form-errors invalid-feedback"
+          />
+          <button
+            class="body-button submit-button profile-button btn btn-secondary"
+            type="submit"
+          >
+            Save Profile
+          </button>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="email"
+            >
+              Email:
+            </label>
+            <input
+              aria-invalid="false"
+              class="flex-input form-control"
+              id="email"
+              name="email"
+              required=""
+              type="email"
+              value=""
+            />
+            <div
+              class="form-errors invalid-feedback"
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="password"
+            >
+              Password:
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Change Password
+            </button>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="name"
+            >
+              Name:
+            </label>
+            <input
+              class="flex-input form-control"
+              id="name"
+              name="name"
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="since"
+            >
+              User Since:
+            </label>
+            <small
+              class="flex-text form-text text-muted"
+              id="since"
+            >
+              Invalid date
+            </small>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="lastLogin"
+            >
+              Last Log In:
+            </label>
+            <div
+              class="flex-text"
+              id="lastLogin"
+            >
+              Invalid date
+            </div>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="diagnoses"
+            >
+              Diagnoses:
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Add a Diagnosis
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`matches the snapshot 2`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="p-0 white-page container-fluid"
+      >
+        <div
+          class="navbar-space m-0 p-0 row"
+        />
+        <div
+          class="m-0 p-0 row"
+        >
+          <h2
+            class="page-title"
+          >
+            PROFILE
+          </h2>
+          <form
+            class="text-content"
+            id="profile-form"
+          >
+            <div
+              class="form-errors invalid-feedback"
+            />
+            <button
+              class="body-button submit-button profile-button btn btn-secondary"
+              type="submit"
+            >
+              Save Profile
+            </button>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                aria-invalid="false"
+                class="flex-input form-control"
+                id="email"
+                name="email"
+                required=""
+                type="email"
+                value=""
+              />
+              <div
+                class="form-errors invalid-feedback"
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="password"
+              >
+                Password:
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Change Password
+              </button>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="name"
+              >
+                Name:
+              </label>
+              <input
+                class="flex-input form-control"
+                id="name"
+                name="name"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="since"
+              >
+                User Since:
+              </label>
+              <small
+                class="flex-text form-text text-muted"
+                id="since"
+              >
+                Invalid date
+              </small>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="lastLogin"
+              >
+                Last Log In:
+              </label>
+              <div
+                class="flex-text"
+                id="lastLogin"
+              >
+                Invalid date
+              </div>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="diagnoses"
+              >
+                Diagnoses:
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Add a Diagnosis
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="p-0 white-page container-fluid"
+    >
+      <div
+        class="navbar-space m-0 p-0 row"
+      />
+      <div
+        class="m-0 p-0 row"
+      >
+        <h2
+          class="page-title"
+        >
+          PROFILE
+        </h2>
+        <form
+          class="text-content"
+          id="profile-form"
+        >
+          <div
+            class="form-errors invalid-feedback"
+          />
+          <button
+            class="body-button submit-button profile-button btn btn-secondary"
+            type="submit"
+          >
+            Save Profile
+          </button>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              aria-invalid="false"
+              class="flex-input form-control"
+              id="email"
+              name="email"
+              required=""
+              type="email"
+              value=""
+            />
+            <div
+              class="form-errors invalid-feedback"
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="password"
+            >
+              Password:
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Change Password
+            </button>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="name"
+            >
+              Name:
+            </label>
+            <input
+              class="flex-input form-control"
+              id="name"
+              name="name"
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="since"
+            >
+              User Since:
+            </label>
+            <small
+              class="flex-text form-text text-muted"
+              id="since"
+            >
+              Invalid date
+            </small>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="lastLogin"
+            >
+              Last Log In:
+            </label>
+            <div
+              class="flex-text"
+              id="lastLogin"
+            >
+              Invalid date
+            </div>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="diagnoses"
+            >
+              Diagnoses:
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Add a Diagnosis
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`matches the snapshot 3`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="p-0 white-page container-fluid"
+      >
+        <div
+          class="navbar-space m-0 p-0 row"
+        />
+        <div
+          class="m-0 p-0 row"
+        >
+          <h2
+            class="page-title"
+          >
+            PROFILE
+          </h2>
+          <form
+            class="text-content"
+            id="profile-form"
+          >
+            <div
+              class="form-errors invalid-feedback"
+            />
+            <button
+              class="body-button submit-button profile-button btn btn-secondary"
+              type="submit"
+            >
+              Save Profile
+            </button>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                aria-invalid="false"
+                class="flex-input form-control"
+                id="email"
+                name="email"
+                required=""
+                type="email"
+                value=""
+              />
+              <div
+                class="form-errors invalid-feedback"
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="password"
+              >
+                Password
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Change Password
+              </button>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="name"
+              >
+                Name:
+              </label>
+              <input
+                class="flex-input form-control"
+                id="name"
+                name="name"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="since"
+              >
+                User Since:
+              </label>
+              <small
+                class="flex-text form-text text-muted"
+                id="since"
+              >
+                Invalid date
+              </small>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="lastLogin"
+              >
+                Last Log In:
+              </label>
+              <div
+                class="flex-text"
+                id="lastLogin"
+              >
+                Invalid date
+              </div>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="diagnoses"
+              >
+                Diagnoses:
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Add a Diagnosis
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="p-0 white-page container-fluid"
+    >
+      <div
+        class="navbar-space m-0 p-0 row"
+      />
+      <div
+        class="m-0 p-0 row"
+      >
+        <h2
+          class="page-title"
+        >
+          PROFILE
+        </h2>
+        <form
+          class="text-content"
+          id="profile-form"
+        >
+          <div
+            class="form-errors invalid-feedback"
+          />
+          <button
+            class="body-button submit-button profile-button btn btn-secondary"
+            type="submit"
+          >
+            Save Profile
+          </button>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              aria-invalid="false"
+              class="flex-input form-control"
+              id="email"
+              name="email"
+              required=""
+              type="email"
+              value=""
+            />
+            <div
+              class="form-errors invalid-feedback"
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="password"
+            >
+              Password
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Change Password
+            </button>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="name"
+            >
+              Name:
+            </label>
+            <input
+              class="flex-input form-control"
+              id="name"
+              name="name"
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="since"
+            >
+              User Since:
+            </label>
+            <small
+              class="flex-text form-text text-muted"
+              id="since"
+            >
+              Invalid date
+            </small>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="lastLogin"
+            >
+              Last Log In:
+            </label>
+            <div
+              class="flex-text"
+              id="lastLogin"
+            >
+              Invalid date
+            </div>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="diagnoses"
+            >
+              Diagnoses:
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Add a Diagnosis
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`matches the snapshot 4`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="p-0 white-page container-fluid"
+      >
+        <div
+          class="navbar-space m-0 p-0 row"
+        />
+        <div
+          class="m-0 p-0 row"
+        >
+          <h2
+            class="page-title"
+          >
+            PROFILE
+          </h2>
+          <form
+            class="text-content"
+            id="profile-form"
+          >
+            <div
+              class="form-errors invalid-feedback"
+            />
+            <button
+              class="body-button submit-button profile-button btn btn-secondary"
+              type="submit"
+            >
+              Save Profile
+            </button>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                aria-invalid="false"
+                class="flex-input form-control"
+                id="email"
+                name="email"
+                required=""
+                type="email"
+                value=""
+              />
+              <div
+                class="form-errors invalid-feedback"
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="password"
+              >
+                Password
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Change Password
+              </button>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="name"
+              >
+                Name
+              </label>
+              <input
+                class="flex-input form-control"
+                id="name"
+                name="name"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="since"
+              >
+                User Since:
+              </label>
+              <small
+                class="flex-text form-text text-muted"
+                id="since"
+              >
+                Invalid date
+              </small>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="lastLogin"
+              >
+                Last Log In:
+              </label>
+              <div
+                class="flex-text"
+                id="lastLogin"
+              >
+                Invalid date
+              </div>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="diagnoses"
+              >
+                Diagnoses:
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Add a Diagnosis
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="p-0 white-page container-fluid"
+    >
+      <div
+        class="navbar-space m-0 p-0 row"
+      />
+      <div
+        class="m-0 p-0 row"
+      >
+        <h2
+          class="page-title"
+        >
+          PROFILE
+        </h2>
+        <form
+          class="text-content"
+          id="profile-form"
+        >
+          <div
+            class="form-errors invalid-feedback"
+          />
+          <button
+            class="body-button submit-button profile-button btn btn-secondary"
+            type="submit"
+          >
+            Save Profile
+          </button>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              aria-invalid="false"
+              class="flex-input form-control"
+              id="email"
+              name="email"
+              required=""
+              type="email"
+              value=""
+            />
+            <div
+              class="form-errors invalid-feedback"
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="password"
+            >
+              Password
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Change Password
+            </button>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="name"
+            >
+              Name
+            </label>
+            <input
+              class="flex-input form-control"
+              id="name"
+              name="name"
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="since"
+            >
+              User Since:
+            </label>
+            <small
+              class="flex-text form-text text-muted"
+              id="since"
+            >
+              Invalid date
+            </small>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="lastLogin"
+            >
+              Last Log In:
+            </label>
+            <div
+              class="flex-text"
+              id="lastLogin"
+            >
+              Invalid date
+            </div>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="diagnoses"
+            >
+              Diagnoses:
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Add a Diagnosis
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`matches the snapshot 5`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="p-0 white-page container-fluid"
+      >
+        <div
+          class="navbar-space m-0 p-0 row"
+        />
+        <div
+          class="m-0 p-0 row"
+        >
+          <h2
+            class="page-title"
+          >
+            PROFILE
+          </h2>
+          <form
+            class="text-content"
+            id="profile-form"
+          >
+            <div
+              class="form-errors invalid-feedback"
+            />
+            <button
+              class="body-button submit-button profile-button btn btn-secondary"
+              type="submit"
+            >
+              Save Profile
+            </button>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                aria-invalid="false"
+                class="flex-input form-control"
+                id="email"
+                name="email"
+                required=""
+                type="email"
+                value=""
+              />
+              <div
+                class="form-errors invalid-feedback"
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="password"
+              >
+                Password
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Change Password
+              </button>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="name"
+              >
+                Name
+              </label>
+              <input
+                class="flex-input form-control"
+                id="name"
+                name="name"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="since"
+              >
+                User Since
+              </label>
+              <small
+                class="flex-text form-text text-muted"
+                id="since"
+              >
+                Invalid date
+              </small>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="lastLogin"
+              >
+                Last Log In:
+              </label>
+              <div
+                class="flex-text"
+                id="lastLogin"
+              >
+                Invalid date
+              </div>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="diagnoses"
+              >
+                Diagnoses:
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Add a Diagnosis
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="p-0 white-page container-fluid"
+    >
+      <div
+        class="navbar-space m-0 p-0 row"
+      />
+      <div
+        class="m-0 p-0 row"
+      >
+        <h2
+          class="page-title"
+        >
+          PROFILE
+        </h2>
+        <form
+          class="text-content"
+          id="profile-form"
+        >
+          <div
+            class="form-errors invalid-feedback"
+          />
+          <button
+            class="body-button submit-button profile-button btn btn-secondary"
+            type="submit"
+          >
+            Save Profile
+          </button>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              aria-invalid="false"
+              class="flex-input form-control"
+              id="email"
+              name="email"
+              required=""
+              type="email"
+              value=""
+            />
+            <div
+              class="form-errors invalid-feedback"
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="password"
+            >
+              Password
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Change Password
+            </button>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="name"
+            >
+              Name
+            </label>
+            <input
+              class="flex-input form-control"
+              id="name"
+              name="name"
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="since"
+            >
+              User Since
+            </label>
+            <small
+              class="flex-text form-text text-muted"
+              id="since"
+            >
+              Invalid date
+            </small>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="lastLogin"
+            >
+              Last Log In:
+            </label>
+            <div
+              class="flex-text"
+              id="lastLogin"
+            >
+              Invalid date
+            </div>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="diagnoses"
+            >
+              Diagnoses:
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Add a Diagnosis
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`matches the snapshot 6`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="p-0 white-page container-fluid"
+      >
+        <div
+          class="navbar-space m-0 p-0 row"
+        />
+        <div
+          class="m-0 p-0 row"
+        >
+          <h2
+            class="page-title"
+          >
+            PROFILE
+          </h2>
+          <form
+            class="text-content"
+            id="profile-form"
+          >
+            <div
+              class="form-errors invalid-feedback"
+            />
+            <button
+              class="body-button submit-button profile-button btn btn-secondary"
+              type="submit"
+            >
+              Save Profile
+            </button>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                aria-invalid="false"
+                class="flex-input form-control"
+                id="email"
+                name="email"
+                required=""
+                type="email"
+                value=""
+              />
+              <div
+                class="form-errors invalid-feedback"
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="password"
+              >
+                Password
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Change Password
+              </button>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="name"
+              >
+                Name
+              </label>
+              <input
+                class="flex-input form-control"
+                id="name"
+                name="name"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="since"
+              >
+                User Since
+              </label>
+              <small
+                class="flex-text form-text text-muted"
+                id="since"
+              >
+                Invalid date
+              </small>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="lastLogin"
+              >
+                Last Log In
+              </label>
+              <div
+                class="flex-text"
+                id="lastLogin"
+              >
+                Invalid date
+              </div>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="diagnoses"
+              >
+                Diagnoses:
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Add a Diagnosis
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="p-0 white-page container-fluid"
+    >
+      <div
+        class="navbar-space m-0 p-0 row"
+      />
+      <div
+        class="m-0 p-0 row"
+      >
+        <h2
+          class="page-title"
+        >
+          PROFILE
+        </h2>
+        <form
+          class="text-content"
+          id="profile-form"
+        >
+          <div
+            class="form-errors invalid-feedback"
+          />
+          <button
+            class="body-button submit-button profile-button btn btn-secondary"
+            type="submit"
+          >
+            Save Profile
+          </button>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              aria-invalid="false"
+              class="flex-input form-control"
+              id="email"
+              name="email"
+              required=""
+              type="email"
+              value=""
+            />
+            <div
+              class="form-errors invalid-feedback"
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="password"
+            >
+              Password
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Change Password
+            </button>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="name"
+            >
+              Name
+            </label>
+            <input
+              class="flex-input form-control"
+              id="name"
+              name="name"
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="since"
+            >
+              User Since
+            </label>
+            <small
+              class="flex-text form-text text-muted"
+              id="since"
+            >
+              Invalid date
+            </small>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="lastLogin"
+            >
+              Last Log In
+            </label>
+            <div
+              class="flex-text"
+              id="lastLogin"
+            >
+              Invalid date
+            </div>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="diagnoses"
+            >
+              Diagnoses:
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Add a Diagnosis
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`matches the snapshot 7`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="p-0 white-page container-fluid"
+      >
+        <div
+          class="navbar-space m-0 p-0 row"
+        />
+        <div
+          class="m-0 p-0 row"
+        >
+          <h2
+            class="page-title"
+          >
+            PROFILE
+          </h2>
+          <form
+            class="text-content"
+            id="profile-form"
+          >
+            <div
+              class="form-errors invalid-feedback"
+            />
+            <button
+              class="body-button submit-button profile-button btn btn-secondary"
+              type="submit"
+            >
+              Save Profile
+            </button>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                aria-invalid="false"
+                class="flex-input form-control"
+                id="email"
+                name="email"
+                required=""
+                type="email"
+                value=""
+              />
+              <div
+                class="form-errors invalid-feedback"
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="password"
+              >
+                Password
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Change Password
+              </button>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="name"
+              >
+                Name
+              </label>
+              <input
+                class="flex-input form-control"
+                id="name"
+                name="name"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="since"
+              >
+                User Since
+              </label>
+              <small
+                class="flex-text form-text text-muted"
+                id="since"
+              >
+                Invalid date
+              </small>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="lastLogin"
+              >
+                Last Log In
+              </label>
+              <div
+                class="flex-text"
+                id="lastLogin"
+              >
+                Invalid date
+              </div>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="diagnoses"
+              >
+                Diagnoses
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Add a Diagnosis
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="p-0 white-page container-fluid"
+    >
+      <div
+        class="navbar-space m-0 p-0 row"
+      />
+      <div
+        class="m-0 p-0 row"
+      >
+        <h2
+          class="page-title"
+        >
+          PROFILE
+        </h2>
+        <form
+          class="text-content"
+          id="profile-form"
+        >
+          <div
+            class="form-errors invalid-feedback"
+          />
+          <button
+            class="body-button submit-button profile-button btn btn-secondary"
+            type="submit"
+          >
+            Save Profile
+          </button>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              aria-invalid="false"
+              class="flex-input form-control"
+              id="email"
+              name="email"
+              required=""
+              type="email"
+              value=""
+            />
+            <div
+              class="form-errors invalid-feedback"
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="password"
+            >
+              Password
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Change Password
+            </button>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="name"
+            >
+              Name
+            </label>
+            <input
+              class="flex-input form-control"
+              id="name"
+              name="name"
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="since"
+            >
+              User Since
+            </label>
+            <small
+              class="flex-text form-text text-muted"
+              id="since"
+            >
+              Invalid date
+            </small>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="lastLogin"
+            >
+              Last Log In
+            </label>
+            <div
+              class="flex-text"
+              id="lastLogin"
+            >
+              Invalid date
+            </div>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="diagnoses"
+            >
+              Diagnoses
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Add a Diagnosis
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`matches the snapshot 8`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="p-0 white-page container-fluid"
+      >
+        <div
+          class="navbar-space m-0 p-0 row"
+        />
+        <div
+          class="m-0 p-0 row"
+        >
+          <h2
+            class="page-title"
+          >
+            PROFILE
+          </h2>
+          <form
+            class="text-content"
+            id="profile-form"
+          >
+            <button
+              class="body-button submit-button profile-button btn btn-secondary"
+              type="submit"
+            >
+              Save Profile
+            </button>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                aria-invalid="false"
+                class="flex-input form-control"
+                id="email"
+                name="email"
+                required=""
+                type="email"
+                value=""
+              />
+              <div
+                class="form-errors invalid-feedback"
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="password"
+              >
+                Password
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Change Password
+              </button>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="name"
+              >
+                Name
+              </label>
+              <input
+                class="flex-input form-control"
+                id="name"
+                name="name"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="since"
+              >
+                User Since
+              </label>
+              <small
+                class="flex-text form-text text-muted"
+                id="since"
+              >
+                Invalid date
+              </small>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="lastLogin"
+              >
+                Last Log In
+              </label>
+              <div
+                class="flex-text"
+                id="lastLogin"
+              >
+                Invalid date
+              </div>
+            </div>
+            <div
+              class="flex-form-group mb-3"
+            >
+              <label
+                class="flex-label form-label"
+                for="diagnoses"
+              >
+                Diagnoses
+              </label>
+              <button
+                class="body-button btn btn-secondary"
+                type="button"
+              >
+                Add a Diagnosis
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="p-0 white-page container-fluid"
+    >
+      <div
+        class="navbar-space m-0 p-0 row"
+      />
+      <div
+        class="m-0 p-0 row"
+      >
+        <h2
+          class="page-title"
+        >
+          PROFILE
+        </h2>
+        <form
+          class="text-content"
+          id="profile-form"
+        >
+          <button
+            class="body-button submit-button profile-button btn btn-secondary"
+            type="submit"
+          >
+            Save Profile
+          </button>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              aria-invalid="false"
+              class="flex-input form-control"
+              id="email"
+              name="email"
+              required=""
+              type="email"
+              value=""
+            />
+            <div
+              class="form-errors invalid-feedback"
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="password"
+            >
+              Password
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Change Password
+            </button>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="name"
+            >
+              Name
+            </label>
+            <input
+              class="flex-input form-control"
+              id="name"
+              name="name"
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="since"
+            >
+              User Since
+            </label>
+            <small
+              class="flex-text form-text text-muted"
+              id="since"
+            >
+              Invalid date
+            </small>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="lastLogin"
+            >
+              Last Log In
+            </label>
+            <div
+              class="flex-text"
+              id="lastLogin"
+            >
+              Invalid date
+            </div>
+          </div>
+          <div
+            class="flex-form-group mb-3"
+          >
+            <label
+              class="flex-label form-label"
+              for="diagnoses"
+            >
+              Diagnoses
+            </label>
+            <button
+              class="body-button btn btn-secondary"
+              type="button"
+            >
+              Add a Diagnosis
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
